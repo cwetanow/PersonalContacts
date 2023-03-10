@@ -1,4 +1,6 @@
+using Api.Services;
 using Application;
+using Application.Common.Contracts;
 using Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,10 +11,16 @@ builder.Services
     .AddApplicationServices()
     .AddPersistence(builder.Configuration.GetConnectionString("PersonalContactsDatabase"));
 
-builder.Services.AddControllers();
+builder.Services
+    .AddScoped<ICurrentUser, FakeCurrentUser>();
+
+builder.Services
+    .AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services
+    .AddEndpointsApiExplorer()
+    .AddSwaggerGen();
 
 var app = builder.Build();
 
