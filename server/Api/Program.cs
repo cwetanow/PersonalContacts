@@ -9,7 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
     .AddApplicationServices()
-    .AddPersistence(builder.Configuration.GetConnectionString("PersonalContactsDatabase"));
+    .AddPersistence(builder.Configuration.GetConnectionString("PersonalContactsDatabase"))
+    .AddInfrastructure();
 
 builder.Services
     .AddScoped<ICurrentUser, FakeCurrentUser>();
