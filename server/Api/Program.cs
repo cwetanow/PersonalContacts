@@ -1,6 +1,4 @@
-using Api.Services;
 using Application;
-using Application.Common.Contracts;
 using Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,10 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
     .AddApplicationServices()
-    .AddPersistence(builder.Configuration.GetConnectionString("PersonalContactsDatabase"));
-
-builder.Services
-    .AddScoped<ICurrentUser, FakeCurrentUser>();
+    .AddPersistence(builder.Configuration.GetConnectionString("PersonalContactsDatabase"))
+    .AddInfrastructure();
 
 builder.Services
     .AddControllers();
