@@ -1,5 +1,6 @@
 ﻿using Application.Commands;
-using AutoMapper;
+using Application.Models;
+using Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,6 +16,14 @@ public class PersonalContactsController : ControllerBase
     {
         this.mediator = mediator;
     }
+
+    [HttpGet]
+    public async Task<IEnumerable<PersonalContactSimpleDto>> GetContacts(string? nameSearchTerm, CancellationToken cancellationToken)
+        => await mediator.Send(new GetPersonalContacts.Query(nameSearchTerm), cancellationToken);
+
+    [HttpGet("{id}")]
+    public async Task<PersonalContactDetailsDto> GetContact(Guid id, CancellationToken cancellationToken)
+        => await mediator.Send(new GetContactById.Query(id), cancellationToken);
 
     [HttpPost]
     public async Task<Guid> AddContact(AddContact.Command request, CancellationToken cancellationToken)
