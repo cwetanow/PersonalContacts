@@ -14,11 +14,8 @@ public class PersonalContactDetailsDto : IMapFrom<PersonalContact>
     public string PhoneNumber { get; set; }
     public string Iban { get; set; }
 
-    public void Mapping(Profile profile)
-    {
-        profile.CreateMap<PersonalContact, PersonalContactDetailsDto>()
+    public void Mapping(Profile profile) => profile.CreateMap<PersonalContact, PersonalContactDetailsDto>()
             .ForMember(dest => dest.PhoneNumber, opts => opts.MapFrom(src => src.PhoneNumber.Value))
             .ForMember(dest => dest.Iban, opts => opts.MapFrom(src => src.Iban.Value))
             .ForMember(dest => dest.DateOfBirth, opts => opts.MapFrom(src => new DateTime(src.DateOfBirth.Year, src.DateOfBirth.Month, src.DateOfBirth.Day)));
-    }
 }
