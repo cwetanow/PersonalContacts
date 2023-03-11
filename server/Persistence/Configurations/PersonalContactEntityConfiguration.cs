@@ -25,7 +25,7 @@ public class PersonalContactEntityConfiguration : IEntityTypeConfiguration<Perso
         builder
             .Property(x => x.DateOfBirth)
             .HasConversion(
-                value => new DateTime(value.Year, value.Month, value.Day),
+                value => new DateTime(value.Year, value.Month, value.Day, 0, 0, 0, DateTimeKind.Utc),
                 dateTime => DateOfBirth.Create(dateTime)
                 );
     }
