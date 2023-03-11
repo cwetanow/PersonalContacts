@@ -13,10 +13,13 @@ public class PersonalContact : Entity
         Address = address;
         PhoneNumber = phoneNumber;
         Iban = iban;
+
+        FullName = $"{FirstName} {LastName}";
     }
 
     public string FirstName { get; private set; }
     public string LastName { get; private set; }
+    public string FullName { get; private set; }
     public DateOfBirth DateOfBirth { get; private set; }
     public Address Address { get; private set; }
     public PhoneNumber PhoneNumber { get; private set; }
