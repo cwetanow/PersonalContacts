@@ -40,6 +40,8 @@ public class AddContact
 
         public Validator(IIBANValidator ibanValidator)
         {
+            this.ibanValidator = ibanValidator;
+
             RuleFor(c => c.FirstName).NotNull().NotEmpty();
             RuleFor(c => c.LastName).NotNull().NotEmpty();
 
@@ -50,7 +52,7 @@ public class AddContact
                 .ChildRules(v =>
                 {
                     v.RuleFor(a => a.City).NotNull().NotEmpty();
-                    v.RuleFor(a => a.ZipCode).NotNull().NotEmpty();
+                    v.RuleFor(a => a.Street).NotNull().NotEmpty();
                 });
 
             RuleFor(c => c.PhoneNumber)
@@ -58,7 +60,6 @@ public class AddContact
 
             RuleFor(c => c.Iban)
                 .Custom(ValidateIban);
-            this.ibanValidator = ibanValidator;
         }
 
         private void PhoneNumberValidator(string value, ValidationContext<Command> context)
@@ -73,7 +74,7 @@ public class AddContact
         private void ValidateIban(string value, ValidationContext<Command> context)
         {
             // Dummy IBAN validator
-            if (ibanValidator.IsValid(value))
+            if (!ibanValidator.IsValid(value))
             {
                 context.AddFailure(new ValidationFailure(nameof(Command.Iban), "Invalid IBAN", value));
             }
