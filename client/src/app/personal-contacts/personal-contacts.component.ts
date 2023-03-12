@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { ConfirmationService } from 'primeng/api';
 import { debounceTime, filter, Observable } from 'rxjs';
 import { PersonalContactSimple } from './models/personal-contact-simple.model';
-import { loadPersonalContacts } from './state/personal-contact.actions';
+import { deleteContact, loadPersonalContacts } from './state/personal-contact.actions';
 import { PersonalContactsState } from './state/personal-contact.reducer';
 
 @Component({
@@ -15,7 +16,10 @@ export class PersonalContactsComponent implements OnInit {
   searchForm: FormGroup;
   contacts$: Observable<PersonalContactSimple[]>;
 
-  constructor(private store: Store<{ personalContacts: PersonalContactsState }>, private fb: FormBuilder) {
+  constructor(
+    private store: Store<{ personalContacts: PersonalContactsState }>,
+    private fb: FormBuilder,
+    private confirmationService: ConfirmationService) {
     this.contacts$ = this.store.select(s => s.personalContacts.contacts);
   }
 
@@ -32,5 +36,14 @@ export class PersonalContactsComponent implements OnInit {
         debounceTime(500)
       )
       .subscribe(value => this.store.dispatch(loadPersonalContacts({ nameSearchTerm: value })))
+  }
+
+  deleteContact(id: string) {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want remove this contact?',
+      accept: () => {
+        this.store.dispatch(deleteContact({ contactId: id }));
+      }
+    });
   }
 }

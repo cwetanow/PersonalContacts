@@ -15,4 +15,8 @@ export class PersonalContactsResource {
 
     return this.http.get<PersonalContactSimple[]>('/api/v1/PersonalContacts', { params });
   }
+
+  deleteContact(id: string): Observable<any> {
+    return this.http.delete(`/api/v1/PersonalContacts/${id}`);
+  }
 }

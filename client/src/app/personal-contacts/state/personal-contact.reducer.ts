@@ -1,5 +1,5 @@
 import { createReducer, on, Action } from "@ngrx/store";
-import { loadPersonalContacts, loadPersonalContactsSuccess } from './personal-contact.actions'
+import { loadPersonalContacts, loadPersonalContactsSuccess, deleteContactSuccess } from './personal-contact.actions';
 
 import { PersonalContactSimple } from '../models/personal-contact-simple.model';
 import { PersonalContactDetail } from '../models/personal-contact-details.model';
@@ -15,5 +15,6 @@ export const initialState: PersonalContactsState = {
 }
 
 export const personalContactsReducer = createReducer(initialState,
-  on(loadPersonalContactsSuccess, (state, { data }) => ({ selectedContact: null, contacts: data }))
+  on(loadPersonalContactsSuccess, (state, { data }) => ({ selectedContact: null, contacts: data })),
+  on(deleteContactSuccess, (state, { deletedContactId }) => ({ selectedContact: null, contacts: state.contacts.filter(c => c.id !== deletedContactId) }))
 );

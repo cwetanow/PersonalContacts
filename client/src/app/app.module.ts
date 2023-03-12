@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,11 +18,12 @@ import { EffectsModule } from '@ngrx/effects';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     PersonalContactsModule,
     SharedModule,
     StoreModule.forRoot({ personalContacts: personalContactsReducer }),
-    EffectsModule.forRoot([PersonalContactEffects])
+    EffectsModule.forRoot([PersonalContactEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent]
