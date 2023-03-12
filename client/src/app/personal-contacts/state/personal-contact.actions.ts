@@ -6,7 +6,10 @@ export enum PersonalContactActions {
   LoadContactsSuccess = '[PersonalContact] Load Success',
 }
 
-export const loadPersonalContacts = createAction(PersonalContactActions.LoadContacts);
+export const loadPersonalContacts = createAction(
+  PersonalContactActions.LoadContacts,
+  props<{ nameSearchTerm: string | null }>()
+);
 
 export const loadPersonalContactsSuccess = createAction(
   PersonalContactActions.LoadContactsSuccess,

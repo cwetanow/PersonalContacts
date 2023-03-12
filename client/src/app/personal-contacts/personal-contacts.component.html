@@ -1,3 +1,14 @@
+<form [formGroup]="searchForm">
+  <span class="p-input-icon-left">
+    <i class="pi pi-search"></i>
+    <input formControlName="nameSearchTerm"
+           type="text"
+           pInputText
+           placeholder="Search" />
+  </span>
+</form>
+
+
 <p-table *ngIf="contacts$ | async as contacts"
          [value]="contacts"
          [tableStyle]="{'min-width': '50rem'}">
@@ -7,6 +18,7 @@
       <th>First</th>
       <th>Last</th>
       <th>Address</th>
+      <th></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body"
@@ -16,6 +28,7 @@
       <td>{{contact.firstName}}</td>
       <td>{{contact.lastName}}</td>
       <td>{{contact.address}}</td>
+      <td></td>
     </tr>
   </ng-template>
 </p-table>
