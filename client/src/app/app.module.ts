@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PersonalContactsModule } from './personal-contacts/personal-contacts.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { PersonalContactsModule } from './personal-contacts/personal-contacts.mo
   imports: [
     BrowserModule,
     AppRoutingModule,
-    PersonalContactsModule
+    PersonalContactsModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,11 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TableModule } from 'primeng/table'
 
-const primeModules = [];
+const primeModules = [
+  TableModule
+];
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    ...primeModules
   ],
   exports: [
     CommonModule,
