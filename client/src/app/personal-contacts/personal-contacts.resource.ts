@@ -20,7 +20,7 @@ export class PersonalContactsResource {
     return this.http.get<PersonalContactSimple[]>(this.url, { params });
   }
 
-  getContactById(id: string): Observable<any> {
+  getContactById(id: string): Observable<PersonalContactDetail> {
     return this.http.get<PersonalContactDetail>(`${this.url}/${id}`);
   }
 
@@ -28,8 +28,8 @@ export class PersonalContactsResource {
     return this.http.post<string>(this.url, request);
   }
 
-  updateContact(id: string, request: ChangeContactRequest): Observable<string> {
-    return this.http.put<string>(`${this.url}/${id}`, request);
+  updateContact(id: string, request: ChangeContactRequest): Observable<PersonalContactDetail> {
+    return this.http.put<PersonalContactDetail>(`${this.url}/${id}`, request);
   }
 
   deleteContact(id: string): Observable<any> {
