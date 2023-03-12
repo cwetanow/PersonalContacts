@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { ConfirmationService } from 'primeng/api';
-import { debounceTime, filter, Observable } from 'rxjs';
+import { debounceTime, distinct, filter, Observable } from 'rxjs';
 import { PersonalContactSimple } from './models/personal-contact-simple.model';
 import { deleteContact, loadPersonalContacts } from './state/personal-contact.actions';
 import { PersonalContactsState } from './state/personal-contact.reducer';
@@ -33,7 +33,8 @@ export class PersonalContactsComponent implements OnInit {
     this.searchForm.controls['nameSearchTerm'].valueChanges
       .pipe(
         filter(value => value.length > 2),
-        debounceTime(500)
+        debounceTime(500),
+        distinct()
       )
       .subscribe(value => this.store.dispatch(loadPersonalContacts({ nameSearchTerm: value })))
   }
@@ -41,9 +42,7 @@ export class PersonalContactsComponent implements OnInit {
   deleteContact(id: string) {
     this.confirmationService.confirm({
       message: 'Are you sure that you want remove this contact?',
-      accept: () => {
-        this.store.dispatch(deleteContact({ contactId: id }));
-      }
+      accept: () => this.store.dispatch(deleteContact({ contactId: id }))
     });
   }
 }
