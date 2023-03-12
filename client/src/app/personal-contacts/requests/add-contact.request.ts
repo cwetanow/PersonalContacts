@@ -1,10 +1,8 @@
-import { Address } from './address.model';
+import { Address } from "../models/address.model";
 
-export class PersonalContactDetail {
-  id: string;
+export class AddContactRequest {
   firstName: string;
   lastName: string;
-  fullName: string;
   dateOfBirth: Date;
   address: Address;
   phoneNumber: string;

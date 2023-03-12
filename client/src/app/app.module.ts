@@ -6,6 +6,11 @@ import { AppComponent } from './app.component';
 import { PersonalContactsModule } from './personal-contacts/personal-contacts.module';
 import { SharedModule } from './shared/shared.module';
 
+import { StoreModule } from '@ngrx/store';
+import { personalContactsReducer } from './personal-contacts/state/personal-contact.reducer';
+import { PersonalContactEffects } from './personal-contacts/state/personal-contact.effects';
+import { EffectsModule } from '@ngrx/effects';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -14,7 +19,9 @@ import { SharedModule } from './shared/shared.module';
     BrowserModule,
     AppRoutingModule,
     PersonalContactsModule,
-    SharedModule
+    SharedModule,
+    StoreModule.forRoot({ personalContacts: personalContactsReducer }),
+    EffectsModule.forRoot([PersonalContactEffects])
   ],
   providers: [],
   bootstrap: [AppComponent]

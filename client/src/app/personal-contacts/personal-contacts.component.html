@@ -1,10 +1,12 @@
-<p-table [value]="contacts"
+<p-table *ngIf="contacts$ | async as contacts"
+         [value]="contacts"
          [tableStyle]="{'min-width': '50rem'}">
   <ng-template pTemplate="header">
     <tr>
       <th>Name</th>
       <th>First</th>
       <th>Last</th>
+      <th>Address</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body"
@@ -13,6 +15,7 @@
       <td>{{contact.fullName}}</td>
       <td>{{contact.firstName}}</td>
       <td>{{contact.lastName}}</td>
+      <td>{{contact.address}}</td>
     </tr>
   </ng-template>
 </p-table>

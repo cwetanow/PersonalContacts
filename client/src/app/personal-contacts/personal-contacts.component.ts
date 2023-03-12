@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { PersonalContactDetail } from './models/personal-contact-details.model';
+import { Store } from '@ngrx/store';
+import { Observable, tap } from 'rxjs';
 import { PersonalContactSimple } from './models/personal-contact-simple.model';
+import { loadPersonalContacts } from './state/personal-contact.actions';
+import { PersonalContactsState } from './state/personal-contact.reducer';
 
 @Component({
   selector: 'app-personal-contacts',
@@ -9,16 +12,13 @@ import { PersonalContactSimple } from './models/personal-contact-simple.model';
 })
 export class PersonalContactsComponent implements OnInit {
 
-  contacts: PersonalContactSimple[] = [{
-    firstName: 'first',
-    lastName: 'last',
-    id: '1234',
-    fullName: 'first last'
-  }];
+  contacts$: Observable<PersonalContactSimple[]>;
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor(private store: Store<{ personalContacts: PersonalContactsState }>) {
+    this.contacts$ = this.store.select(s => s.personalContacts.contacts);
   }
 
+  ngOnInit() {
+    this.store.dispatch(loadPersonalContacts());
+  }
 }

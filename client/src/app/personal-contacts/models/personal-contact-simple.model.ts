@@ -3,4 +3,5 @@ export class PersonalContactSimple {
   firstName: string;
   lastName: string;
   fullName: string;
+  address: string;
 }
