@@ -1,5 +1,5 @@
-import { createReducer, on, Action } from "@ngrx/store";
-import { loadPersonalContacts, loadPersonalContactsSuccess, deleteContactSuccess, addContactSuccess, loadPersonalContactDetailsSuccess, updateContactSuccess } from './personal-contact.actions';
+import { createReducer, on } from "@ngrx/store";
+import { loadPersonalContactsSuccess, deleteContactSuccess, addContactSuccess, loadPersonalContactDetailsSuccess, updateContactSuccess } from './personal-contact.actions';
 
 import { PersonalContactSimple } from '../models/personal-contact-simple.model';
 import { PersonalContactDetail } from '../models/personal-contact-details.model';

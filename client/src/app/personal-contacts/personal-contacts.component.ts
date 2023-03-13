@@ -6,6 +6,7 @@ import { debounceTime, distinct, filter, Observable } from 'rxjs';
 import { PersonalContactSimple } from './models/personal-contact-simple.model';
 import { deleteContact, loadPersonalContacts } from './state/personal-contact.actions';
 import { PersonalContactsState } from './state/personal-contact.reducer';
+import { PersonalContactDetail } from './models/personal-contact-details.model';
 
 @Component({
   selector: 'app-personal-contacts',
@@ -16,10 +17,13 @@ export class PersonalContactsComponent implements OnInit {
   searchForm: FormGroup;
   contacts$: Observable<PersonalContactSimple[]>;
 
+  contactFormOpened: boolean;
+
   constructor(
     private store: Store<{ personalContacts: PersonalContactsState }>,
     private fb: FormBuilder,
-    private confirmationService: ConfirmationService) {
+    private confirmationService: ConfirmationService
+  ) {
     this.contacts$ = this.store.select(s => s.personalContacts.contacts);
   }
 
@@ -39,10 +43,15 @@ export class PersonalContactsComponent implements OnInit {
       .subscribe(value => this.store.dispatch(loadPersonalContacts({ nameSearchTerm: value })))
   }
 
-  deleteContact(id: string) {
-    this.confirmationService.confirm({
-      message: 'Are you sure that you want remove this contact?',
-      accept: () => this.store.dispatch(deleteContact({ contactId: id }))
-    });
+  addContact() {
+    this.contactFormOpened = true;
+  }
+
+  saveContact(contact: PersonalContactDetail) {
+
+  }
+
+  openDetails(id: string) {
+
   }
 }

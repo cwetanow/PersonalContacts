@@ -24,8 +24,8 @@ export class PersonalContactsResource {
     return this.http.get<PersonalContactDetail>(`${this.url}/${id}`);
   }
 
-  addContact(request: ChangeContactRequest): Observable<string> {
-    return this.http.post<string>(this.url, request);
+  addContact(request: ChangeContactRequest): Observable<PersonalContactDetail> {
+    return this.http.post<PersonalContactDetail>(this.url, request);
   }
 
   updateContact(id: string, request: ChangeContactRequest): Observable<PersonalContactDetail> {

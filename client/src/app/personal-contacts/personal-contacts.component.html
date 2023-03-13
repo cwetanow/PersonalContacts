@@ -8,7 +8,6 @@
   </span>
 </form>
 
-
 <p-table *ngIf="contacts$ | async as contacts"
          [value]="contacts"
          [tableStyle]="{'min-width': '50rem'}">
@@ -18,11 +17,19 @@
       <th>First</th>
       <th>Last</th>
       <th>Address</th>
-      <th></th>
+      <th>
+        <button pButton
+                pRipple
+                type="button"
+                icon="pi pi-plus"
+                class="p-button-rounded p-button-info"
+                (click)="addContact()"></button>
+      </th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body"
-               let-contact>
+               let-contact
+               let-expanded="expanded">
     <tr>
       <td>{{contact.fullName}}</td>
       <td>{{contact.firstName}}</td>
@@ -34,19 +41,13 @@
                 pRipple
                 type="button"
                 icon="pi pi-user"
+                [routerLink]="['/contacts', contact.id ]"
                 class="p-button-rounded p-button-info"></button>
-
-        <button pButton
-                pRipple
-                type="button"
-                icon="pi pi-times"
-                class="p-button-rounded p-button-danger"
-                (click)="deleteContact(contact.id)"></button>
 
       </td>
     </tr>
   </ng-template>
 </p-table>
 
-<p-confirmDialog header="Confirmation"
-                 icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<app-personal-contact-form-dialog [display]="contactFormOpened"
+                                  (saveForm)="saveContact($event)"></app-personal-contact-form-dialog>
