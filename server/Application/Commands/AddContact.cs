@@ -1,5 +1,6 @@
 ﻿using Application.Common.Contracts;
 using Application.Models;
+using AutoMapper;
 using Domain;
 using FluentValidation;
 using FluentValidation.Results;
@@ -9,18 +10,21 @@ using Microsoft.EntityFrameworkCore;
 namespace Application.Commands;
 public class AddContact
 {
-    public record Command(string FirstName, string LastName, DateTime DateOfBirth, AddressDto Address, string PhoneNumber, string Iban) : IRequest<Guid>;
+    public record Command(string FirstName, string LastName, DateTime DateOfBirth, AddressDto Address, string PhoneNumber, string Iban)
+        : IRequest<PersonalContactDetailsDto>;
 
-    public class Handler : IRequestHandler<Command, Guid>
+    public class Handler : IRequestHandler<Command, PersonalContactDetailsDto>
     {
         private readonly DbContext context;
+        private readonly IMapper mapper;
 
-        public Handler(DbContext context)
+        public Handler(DbContext context, IMapper mapper)
         {
             this.context = context;
+            this.mapper = mapper;
         }
 
-        public async Task<Guid> Handle(Command request, CancellationToken cancellationToken)
+        public async Task<PersonalContactDetailsDto> Handle(Command request, CancellationToken cancellationToken)
         {
             var address = new Address(request.Address.Street, request.Address.City, request.Address.ZipCode);
             var dateOfBirth = DateOfBirth.Create(request.DateOfBirth);
@@ -30,7 +34,7 @@ public class AddContact
             context.Add(contact);
             await context.SaveChangesAsync(cancellationToken);
 
-            return contact.Id;
+            return mapper.Map<PersonalContactDetailsDto>(contact);
         }
     }
 
