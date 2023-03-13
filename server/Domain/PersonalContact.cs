@@ -40,6 +40,14 @@ public class PersonalContact : Entity
         this.SetFullName();
     }
 
+    public void ChangeDetails(DateOfBirth dateOfBirth, Address address, Iban iban, PhoneNumber phoneNumber)
+    {
+        this.DateOfBirth = dateOfBirth;
+        this.Address = address;
+        this.Iban = iban;
+        this.PhoneNumber = phoneNumber;
+    }
+
     private void SetFullName()
     {
         FullName = $"{FirstName} {LastName}";

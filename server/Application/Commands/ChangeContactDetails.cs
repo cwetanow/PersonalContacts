@@ -9,9 +9,9 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Commands;
-public class UpdateContact
+public class ChangeContactDetails
 {
-    public record Command(Guid Id, string FirstName, string LastName, DateTime DateOfBirth, AddressDto Address, string PhoneNumber, string Iban)
+    public record Command(Guid Id, DateTime DateOfBirth, AddressDto Address, string PhoneNumber, string Iban)
         : IRequest<PersonalContactDetailsDto>;
 
     public class Handler : IRequestHandler<Command, PersonalContactDetailsDto>
@@ -35,12 +35,11 @@ public class UpdateContact
                 throw new EntityNotFoundException<PersonalContact>(request.Id);
             }
 
-            contact.Rename(request.FirstName, request.LastName);
-
             var address = new Address(request.Address.Street, request.Address.City, request.Address.ZipCode);
             var dateOfBirth = DateOfBirth.Create(request.DateOfBirth);
 
-            context.Add(contact);
+            contact.ChangeDetails(dateOfBirth, address, new Iban(request.Iban), new PhoneNumber(request.PhoneNumber));
+
             await context.SaveChangesAsync(cancellationToken);
 
             return mapper.Map<PersonalContactDetailsDto>(contact);
@@ -54,9 +53,6 @@ public class UpdateContact
         public Validator(IIBANValidator ibanValidator)
         {
             this.ibanValidator = ibanValidator;
-
-            RuleFor(c => c.FirstName).NotNull().NotEmpty();
-            RuleFor(c => c.LastName).NotNull().NotEmpty();
 
             RuleFor(c => c.DateOfBirth).NotEqual(default(DateTime));
 
