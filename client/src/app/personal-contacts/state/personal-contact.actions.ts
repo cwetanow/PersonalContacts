@@ -47,7 +47,7 @@ export const loadPersonalContactDetails = createAction(
 
 export const loadPersonalContactDetailsSuccess = createAction(
   PersonalContactActions.LoadContactDetailsSuccess,
-  props<{ data: PersonalContactDetail }>()
+  props<{ contact: PersonalContactDetail }>()
 );
 
 export const addContact = createAction(
@@ -57,12 +57,12 @@ export const addContact = createAction(
 
 export const addContactSuccess = createAction(
   PersonalContactActions.AddContactSuccess,
-  props<{ id: string }>()
+  props<{ contact: PersonalContactDetail }>()
 );
 
 export const updateContact = createAction(
   PersonalContactActions.UpdateContact,
-  props<{ request: ChangeContactRequest }>()
+  props<{ id: string, request: ChangeContactRequest }>()
 );
 
 export const updateContactSuccess = createAction(
