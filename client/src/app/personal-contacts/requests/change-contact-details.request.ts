@@ -1,8 +1,6 @@
 import { Address } from "../models/address.model";
 
-export class ChangeContactRequest {
-  firstName: string;
-  lastName: string;
+export class ChangeContactDetailsRequest {
   dateOfBirth: Date;
   address: Address;
   phoneNumber: string;

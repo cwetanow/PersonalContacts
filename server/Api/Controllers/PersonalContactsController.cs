@@ -35,7 +35,7 @@ public class PersonalContactsController : ControllerBase
     public async Task<PersonalContactSimpleDto> RenameContact(Guid id, RenameContactRequest request, CancellationToken cancellationToken)
         => await mediator.Send(new RenameContact.Command(id, request.FirstName, request.LastName), cancellationToken);
 
-    [HttpPut("{id}/ChangeDetails")]
+    [HttpPut("{id}/Details")]
     public async Task<PersonalContactDetailsDto> ChangeDetails(Guid id, ChangeContactDetailsRequest request, CancellationToken cancellationToken)
         => await mediator.Send(new ChangeContactDetails.Command(id, request.DateOfBirth, request.Address, request.PhoneNumber, request.Iban), cancellationToken);
 }

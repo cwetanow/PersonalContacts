@@ -3,11 +3,13 @@ import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, exhaustMap } from 'rxjs/operators';
 import { PersonalContactsResource } from '../personal-contacts.resource';
-import { loadPersonalContactsSuccess, PersonalContactActions, deleteContactSuccess, addContactSuccess, updateContact, updateContactSuccess, loadPersonalContactDetailsSuccess } from './personal-contact.actions';
-import { ChangeContactRequest } from '../requests/change-contact.request';
+import { loadPersonalContactsSuccess, PersonalContactActions, deleteContactSuccess, addContactSuccess, loadPersonalContactDetailsSuccess, renameContactSuccess, changeContactDetailsSuccess } from './personal-contact.actions';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs';
 import { PersonalContactDetail } from '../models/personal-contact-details.model';
+import { RenameContactRequest } from '../requests/rename-contact.request';
+import { ChangeContactDetailsRequest } from '../requests/change-contact-details.request';
+import { AddContactRequest } from '../requests/add-contact.request';
 
 @Injectable()
 export class PersonalContactEffects {
@@ -35,17 +37,25 @@ export class PersonalContactEffects {
 
   addContact$ = createEffect(() => this.actions$.pipe(
     ofType(PersonalContactActions.AddContact),
-    exhaustMap((action: { request: ChangeContactRequest }) => this.resource.addContact(action.request)
+    exhaustMap((action: { request: AddContactRequest }) => this.resource.addContact(action.request)
       .pipe(
         map(contact => addContactSuccess({ contact }))
       ))
   ));
 
-  updateContact$ = createEffect(() => this.actions$.pipe(
-    ofType(PersonalContactActions.UpdateContact),
-    exhaustMap((action: { id: string, request: ChangeContactRequest }) => this.resource.updateContact(action.id, action.request)
+  renameContact$ = createEffect(() => this.actions$.pipe(
+    ofType(PersonalContactActions.RenameContact),
+    exhaustMap((action: { id: string, request: RenameContactRequest }) => this.resource.renameContact(action.id, action.request)
       .pipe(
-        map(updatedContact => updateContactSuccess({ updatedContact }))
+        map(updatedContact => renameContactSuccess({ updatedContact }))
+      ))
+  ));
+
+  changeContactDetails$ = createEffect(() => this.actions$.pipe(
+    ofType(PersonalContactActions.ChangeContactDetails),
+    exhaustMap((action: { id: string, request: ChangeContactDetailsRequest }) => this.resource.changeContactDetails(action.id, action.request)
+      .pipe(
+        map(updatedContact => changeContactDetailsSuccess({ updatedContact }))
       ))
   ));
 
