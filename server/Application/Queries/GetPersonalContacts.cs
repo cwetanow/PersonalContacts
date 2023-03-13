@@ -22,7 +22,7 @@ public class GetPersonalContacts
         }
 
         public async Task<IEnumerable<PersonalContactSimpleDto>> Handle(Query request, CancellationToken cancellationToken) => await context.Set<PersonalContact>()
-                    .Where(c => string.IsNullOrEmpty(request.NameSearchTerm) || c.FullName.Contains(request.NameSearchTerm))
+                    .Where(c => string.IsNullOrEmpty(request.NameSearchTerm) || c.FullName.ToLower().Contains(request.NameSearchTerm.ToLower()))
                     .ProjectTo<PersonalContactSimpleDto>(mapper.ConfigurationProvider)
                     .ToListAsync(cancellationToken);
     }

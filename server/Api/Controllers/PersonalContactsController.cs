@@ -26,7 +26,7 @@ public class PersonalContactsController : ControllerBase
         => await mediator.Send(new GetContactById.Query(id), cancellationToken);
 
     [HttpPost]
-    public async Task<Guid> AddContact(AddContact.Command request, CancellationToken cancellationToken)
+    public async Task<PersonalContactDetailsDto> AddContact(AddContact.Command request, CancellationToken cancellationToken)
         => await mediator.Send(request, cancellationToken);
 
     [HttpDelete("{id}")]

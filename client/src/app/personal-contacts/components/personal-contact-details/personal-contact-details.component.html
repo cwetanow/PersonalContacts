@@ -1,0 +1,24 @@
+<ng-container *ngIf="contact$ | async as contact">
+  <p-card [header]="contact.fullName"
+          [subheader]="getAddressInfo(contact.address)"
+          [style]="{width: '360px'}"
+          styleClass="p-card-shadow">
+
+    <p>Phone Number: {{ contact.phoneNumber }} </p>
+    <p>IBAN: {{ contact.iban }} </p>
+
+    <ng-template pTemplate="footer">
+      <p-button label="Save"
+                icon="pi pi-check"></p-button>
+      <p-button label="Delete Contact"
+                icon="pi pi-times"
+                styleClass="p-button-danger"
+                (click)="deleteContact(contact.id)"
+                [style]="{'margin-left': '.5em'}"></p-button>
+    </ng-template>
+  </p-card>
+
+  <p-confirmDialog header="Confirmation"
+                   icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
+</ng-container>

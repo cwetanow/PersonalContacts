@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Application.Common.Mapping;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using static Application.Commands.AddContact;
 
 namespace Application.Tests.Commands.AddContact;
@@ -23,13 +25,17 @@ public class HandlerTests
 
         var fakeContext = A.Fake<DbContext>();
 
-        var handler = new Handler(fakeContext);
+        var mapper = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>()).CreateMapper();
+
+        var handler = new Handler(fakeContext, mapper);
 
         // Act
-        await handler.Handle(command, default);
+        var result = await handler.Handle(command, default);
 
         // Assert
         A.CallTo(() => fakeContext.SaveChangesAsync(default))
             .MustHaveHappenedOnceExactly();
+
+        result.Should().BeEquivalentTo(command);
     }
 }
