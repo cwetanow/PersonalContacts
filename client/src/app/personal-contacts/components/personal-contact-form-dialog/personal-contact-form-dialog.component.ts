@@ -2,6 +2,7 @@ import { outputAst } from '@angular/compiler';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PersonalContactDetail } from '../../models/personal-contact-details.model';
+import { ChangeContactRequest } from '../../requests/change-contact.request';
 
 @Component({
   selector: 'app-personal-contact-form-dialog',
@@ -10,11 +11,11 @@ import { PersonalContactDetail } from '../../models/personal-contact-details.mod
 })
 export class PersonalContactFormDialogComponent implements OnInit {
   form: FormGroup;
-  model: PersonalContactDetail;
+  model: ChangeContactRequest;
 
   @Input() display = false;
 
-  @Output() saveForm = new EventEmitter<PersonalContactDetail>();
+  @Output() saveForm = new EventEmitter<ChangeContactRequest>();
 
   constructor(private fb: FormBuilder) {
 
@@ -37,7 +38,8 @@ export class PersonalContactFormDialogComponent implements OnInit {
   }
 
   save() {
-    this.saveForm.emit(this.model);
+    const request = this.form.value as ChangeContactRequest;
+    this.saveForm.emit(request);
   }
 
 }

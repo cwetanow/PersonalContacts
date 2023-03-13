@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable, filter, map, distinct, tap } from 'rxjs';
 import { PersonalContactsState } from '../../state/personal-contact.reducer';
 import { PersonalContactDetail } from '../../models/personal-contact-details.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { deleteContact, loadPersonalContactDetails } from '../../state/personal-contact.actions';
 import { Address } from '../../models/address.model';
 import { ConfirmationService } from 'primeng/api';
