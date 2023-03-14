@@ -1,15 +1,16 @@
 <ng-container *ngIf="contact$ | async as contact">
   <p-card [header]="contact.fullName"
           [subheader]="getAddressInfo(contact.address)"
-          [style]="{width: '360px'}"
+          [style]="{width: '50%'}"
           styleClass="p-card-shadow">
 
     <p>Phone Number: {{ contact.phoneNumber }} </p>
     <p>IBAN: {{ contact.iban }} </p>
 
     <ng-template pTemplate="footer">
-      <p-button label="Save"
-                icon="pi pi-check"></p-button>
+      <p-button label="Change Details"
+                icon="pi pi-pencil"></p-button>
+
       <p-button label="Delete Contact"
                 icon="pi pi-times"
                 styleClass="p-button-danger"
@@ -20,5 +21,4 @@
 
   <p-confirmDialog header="Confirmation"
                    icon="pi pi-exclamation-triangle"></p-confirmDialog>
-
 </ng-container>

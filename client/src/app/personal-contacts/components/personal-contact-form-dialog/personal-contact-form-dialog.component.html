@@ -5,8 +5,7 @@
           [draggable]="false"
           [resizable]="false">
 
-  <form [formGroup]="form"
-        (ngSubmit)="save()">
+  <form [formGroup]="form">
     <div class="p-field">
       <label for="firstName">First Name</label>
       <input type="text"
@@ -73,6 +72,7 @@
 
     <p-button icon="pi pi-check"
               (click)="save()"
+              [disabled]="!form.valid"
               label="Save"
               styleClass="p-button-text"></p-button>
   </ng-template>
