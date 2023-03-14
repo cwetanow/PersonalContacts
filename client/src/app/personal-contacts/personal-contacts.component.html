@@ -13,10 +13,6 @@
          [tableStyle]="{'min-width': '50rem'}">
   <ng-template pTemplate="header">
     <tr>
-      <th>Name</th>
-      <th>First</th>
-      <th>Last</th>
-      <th>Address</th>
       <th>
         <button pButton
                 pRipple
@@ -25,26 +21,32 @@
                 class="p-button-rounded p-button-info"
                 (click)="addContact()"></button>
       </th>
+      <th>Name</th>
+      <th>Address</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body"
                let-contact
                let-expanded="expanded">
     <tr>
-      <td>{{contact.fullName}}</td>
-      <td>{{contact.firstName}}</td>
-      <td>{{contact.lastName}}</td>
-      <td>{{contact.address}}</td>
       <td>
-
         <button pButton
                 pRipple
                 type="button"
                 icon="pi pi-user"
                 [routerLink]="['/contacts', contact.id ]"
                 class="p-button-rounded p-button-info"></button>
-
       </td>
+      <td>
+        {{contact.fullName}}
+        <button pButton
+                pRipple
+                type="button"
+                icon="pi pi-pencil"
+                (click)="rename(contact)"
+                class="p-button-rounded p-button-info"></button>
+      </td>
+      <td>{{contact.address}}</td>
     </tr>
   </ng-template>
 </p-table>

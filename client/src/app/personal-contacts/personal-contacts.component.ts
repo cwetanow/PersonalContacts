@@ -48,4 +48,8 @@ export class PersonalContactsComponent implements OnInit {
   saveContact(request: AddContactRequest) {
     this.store.dispatch(addContact({ request }));
   }
+
+  rename(contact: PersonalContactSimple) {
+
+  }
 }
