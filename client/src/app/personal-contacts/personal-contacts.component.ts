@@ -6,6 +6,8 @@ import { PersonalContactSimple } from './models/personal-contact-simple.model';
 import { addContact, loadPersonalContacts } from './state/personal-contact.actions';
 import { PersonalContactsState } from './state/personal-contact.reducer';
 import { AddContactRequest } from './requests/add-contact.request';
+import { DialogService } from 'primeng/dynamicdialog';
+import { PersonalContactFormDialogComponent } from './components/personal-contact-form-dialog/personal-contact-form-dialog.component';
 
 @Component({
   selector: 'app-personal-contacts',
@@ -20,7 +22,8 @@ export class PersonalContactsComponent implements OnInit {
 
   constructor(
     private store: Store<{ personalContacts: PersonalContactsState }>,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private dialogService: DialogService
   ) {
     this.contacts$ = this.store.select(s => s.personalContacts.contacts);
   }
@@ -42,14 +45,12 @@ export class PersonalContactsComponent implements OnInit {
   }
 
   addContact() {
-    this.contactFormOpened = true;
-  }
-
-  saveContact(request: AddContactRequest) {
-    this.store.dispatch(addContact({ request }));
-  }
-
-  rename(contact: PersonalContactSimple) {
-
+    this.dialogService.open(PersonalContactFormDialogComponent,
+      {})
+      .onClose
+      .pipe(
+        filter(request => !!request)
+      )
+      .subscribe(request => this.store.dispatch(addContact({ request })));
   }
 }

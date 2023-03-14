@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AddContactRequest } from '../../requests/add-contact.request';
 
 @Component({
@@ -10,11 +11,7 @@ import { AddContactRequest } from '../../requests/add-contact.request';
 export class PersonalContactFormDialogComponent implements OnInit {
   form: FormGroup;
 
-  @Input() display = false;
-
-  @Output() saveForm = new EventEmitter<AddContactRequest>();
-
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private ref: DynamicDialogRef) { }
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -33,8 +30,7 @@ export class PersonalContactFormDialogComponent implements OnInit {
   }
 
   save() {
-    const request = this.form.value as AddContactRequest;
-    this.saveForm.emit(request);
+    this.ref.close(this.form.value);
   }
 
 }

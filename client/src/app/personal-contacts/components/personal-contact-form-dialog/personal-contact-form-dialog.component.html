@@ -1,79 +1,67 @@
-<p-dialog header="Add Contact"
-          [(visible)]="display"
-          [modal]="true"
-          [style]="{width: '50vw'}"
-          [draggable]="false"
-          [resizable]="false">
+<form [formGroup]="form">
+  <div class="p-field">
+    <label for="firstName">First Name</label>
+    <input type="text"
+           id="firstName"
+           pInputText
+           formControlName="firstName">
+  </div>
+  <div class="p-field">
+    <label for="lastName">Last Name</label>
+    <input type="text"
+           id="lastName"
+           pInputText
+           formControlName="lastName">
+  </div>
+  <div class="p-field">
+    <label for="dateOfBirth">Date of Birth</label>
+    <p-calendar id="dateOfBirth"
+                formControlName="dateOfBirth"
+                [showIcon]="true"
+                dateFormat="dd/mm/yy"></p-calendar>
 
-  <form [formGroup]="form">
+  </div>
+  <div formGroupName="address">
     <div class="p-field">
-      <label for="firstName">First Name</label>
+      <label for="street">Street</label>
       <input type="text"
-             id="firstName"
+             id="street"
              pInputText
-             formControlName="firstName">
+             formControlName="street">
     </div>
     <div class="p-field">
-      <label for="lastName">Last Name</label>
+      <label for="city">City</label>
       <input type="text"
-             id="lastName"
+             id="city"
              pInputText
-             formControlName="lastName">
+             formControlName="city">
     </div>
     <div class="p-field">
-      <label for="dateOfBirth">Date of Birth</label>
-      <p-calendar id="dateOfBirth"
-                  formControlName="dateOfBirth"
-                  [showIcon]="true"
-                  dateFormat="dd/mm/yy"></p-calendar>
-
-    </div>
-    <div formGroupName="address">
-      <div class="p-field">
-        <label for="street">Street</label>
-        <input type="text"
-               id="street"
-               pInputText
-               formControlName="street">
-      </div>
-      <div class="p-field">
-        <label for="city">City</label>
-        <input type="text"
-               id="city"
-               pInputText
-               formControlName="city">
-      </div>
-      <div class="p-field">
-        <label for="zipCode">Zip Code</label>
-        <input type="text"
-               id="zipCode"
-               pInputText
-               formControlName="zipCode">
-      </div>
-    </div>
-    <div class="p-field">
-      <label for="phoneNumber">Phone Number</label>
+      <label for="zipCode">Zip Code</label>
       <input type="text"
-             id="phoneNumber"
+             id="zipCode"
              pInputText
-             formControlName="phoneNumber">
+             formControlName="zipCode">
     </div>
-    <div class="p-field">
-      <label for="iban">IBAN</label>
-      <input type="text"
-             id="iban"
-             pInputText
-             formControlName="iban">
-    </div>
-  </form>
+  </div>
+  <div class="p-field">
+    <label for="phoneNumber">Phone Number</label>
+    <input type="text"
+           id="phoneNumber"
+           pInputText
+           formControlName="phoneNumber">
+  </div>
+  <div class="p-field">
+    <label for="iban">IBAN</label>
+    <input type="text"
+           id="iban"
+           pInputText
+           formControlName="iban">
+  </div>
+</form>
 
-
-  <ng-template pTemplate="footer">
-
-    <p-button icon="pi pi-check"
-              (click)="save()"
-              [disabled]="!form.valid"
-              label="Save"
-              styleClass="p-button-text"></p-button>
-  </ng-template>
-</p-dialog>
+<p-button icon="pi pi-check"
+          (click)="save()"
+          [disabled]="!form.valid"
+          label="Save"
+          styleClass="p-button-text"></p-button>

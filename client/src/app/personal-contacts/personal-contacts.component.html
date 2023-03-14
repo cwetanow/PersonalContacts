@@ -37,19 +37,8 @@
                 [routerLink]="['/contacts', contact.id ]"
                 class="p-button-rounded p-button-info"></button>
       </td>
-      <td>
-        {{contact.fullName}}
-        <button pButton
-                pRipple
-                type="button"
-                icon="pi pi-pencil"
-                (click)="rename(contact)"
-                class="p-button-rounded p-button-info"></button>
-      </td>
+      <td> {{contact.fullName}}</td>
       <td>{{contact.address}}</td>
     </tr>
   </ng-template>
 </p-table>
-
-<app-personal-contact-form-dialog [display]="contactFormOpened"
-                                  (saveForm)="saveContact($event)"></app-personal-contact-form-dialog>
