@@ -8,6 +8,8 @@ import { deleteContact, loadPersonalContactDetails, changeContactDetails } from 
 import { Address } from '../../models/address.model';
 import { ConfirmationService } from 'primeng/api';
 import { ChangeContactDetailsRequest } from '../../requests/change-contact-details.request';
+import { DialogService } from 'primeng/dynamicdialog';
+import { ChangeContactDetailsComponent } from '../change-contact-details/change-contact-details.component';
 
 @Component({
   selector: 'app-personal-contact-details',
@@ -16,14 +18,13 @@ import { ChangeContactDetailsRequest } from '../../requests/change-contact-detai
 })
 export class PersonalContactDetailsComponent implements OnInit {
 
-  isEditMode = false;
-
   contact$: Observable<PersonalContactDetail>;
 
   constructor(
     private route: ActivatedRoute,
     private store: Store<{ personalContacts: PersonalContactsState }>,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private dialogService: DialogService
   ) {
     this.contact$ = this.store.select(s => s.personalContacts.selectedContact)
       .pipe(
@@ -52,7 +53,14 @@ export class PersonalContactDetailsComponent implements OnInit {
     });
   }
 
-  saveChanges(id: string, request: ChangeContactDetailsRequest) {
-    this.store.dispatch(changeContactDetails({ id, request }));
+  changeDetails(contact: PersonalContactDetail) {
+    this.dialogService.open(ChangeContactDetailsComponent, {
+      header: 'Change Details',
+      width: '60%',
+      data: contact,
+    })
+      .onClose
+      .pipe(filter(request => !!request))
+      .subscribe((request: ChangeContactDetailsRequest) => this.store.dispatch(changeContactDetails({ id: contact.id, request })));
   }
 }
