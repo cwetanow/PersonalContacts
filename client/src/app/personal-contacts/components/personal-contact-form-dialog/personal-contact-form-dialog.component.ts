@@ -23,8 +23,8 @@ export class PersonalContactFormDialogComponent implements OnInit {
         city: ['', Validators.required],
         zipCode: ['']
       }),
-      phoneNumber: ['', Validators.pattern(/^\d{10}$/)],
-      iban: ['', Validators.pattern(/^[A-Z]{2}\d{2}\s?\d{4}\s?\d{4}\s?\d{4}\s?\d{4}\s?\d{2}$/)]
+      phoneNumber: ['', Validators.compose([Validators.required, Validators.pattern(/^\+?\d{3,}/)])],
+      iban: ['', [Validators.required, Validators.pattern(/^[A-Z]{2}/)]]
     });
 
   }

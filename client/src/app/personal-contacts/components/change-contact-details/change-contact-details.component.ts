@@ -28,8 +28,8 @@ export class ChangeContactDetailsComponent implements OnInit {
         city: [contact.address.city, Validators.required],
         zipCode: [contact.address.zipCode]
       }),
-      phoneNumber: [contact.phoneNumber, Validators.pattern(/^\d{10}$/)],
-      iban: [contact.iban, Validators.pattern(/^[A-Z]{2}\d{2}\s?\d{4}\s?\d{4}\s?\d{4}\s?\d{4}\s?\d{2}$/)]
+      phoneNumber: [contact.phoneNumber, Validators.compose([Validators.required, Validators.pattern(/^\+?\d{3,}/)])],
+      iban: [contact.iban, [Validators.required, Validators.pattern(/^[A-Z]{2}/)]]
     })
   }
 
