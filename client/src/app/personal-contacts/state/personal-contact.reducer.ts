@@ -27,8 +27,10 @@ export const personalContactsReducer = createReducer(initialState,
   })),
   on(renameContactSuccess, (state, { updatedContact }) => ({
     ...state,
-    contacts: state.contacts.map(c => c.id === updatedContact.id ? updatedContact : c)
-
+    contacts: state.contacts.map(c => c.id === updatedContact.id ? updatedContact : c),
+    selectedContact: state.selectedContact ?
+      { ...state.selectedContact, firstName: updatedContact.firstName, lastName: updatedContact.lastName, fullName: updatedContact.fullName }
+      : null
   })),
   on(addContactSuccess, (state, { contact }) => ({ ...state, selectedContact: contact, contacts: [...state.contacts, Object.assign(new PersonalContactSimple(), contact)] }))
 );

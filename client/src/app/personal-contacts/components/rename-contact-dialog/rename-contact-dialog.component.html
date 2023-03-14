@@ -1,3 +1,22 @@
-<p>
-  rename-contact-dialog works!
-</p>
+<form [formGroup]="form">
+  <div class="p-field">
+    <label for="firstName">First Name</label>
+    <input type="text"
+           id="firstName"
+           pInputText
+           formControlName="firstName">
+  </div>
+  <div class="p-field">
+    <label for="lastName">Last Name</label>
+    <input type="text"
+           id="lastName"
+           pInputText
+           formControlName="lastName">
+  </div>
+</form>
+
+<p-button icon="pi pi-check"
+          (click)="save()"
+          [disabled]="!form.valid"
+          label="Save"
+          styleClass="p-button-text"></p-button>

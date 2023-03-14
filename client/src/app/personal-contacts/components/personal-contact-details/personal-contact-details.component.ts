@@ -4,12 +4,14 @@ import { Observable, filter, map, distinct, tap } from 'rxjs';
 import { PersonalContactsState } from '../../state/personal-contact.reducer';
 import { PersonalContactDetail } from '../../models/personal-contact-details.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { deleteContact, loadPersonalContactDetails, changeContactDetails } from '../../state/personal-contact.actions';
+import { deleteContact, loadPersonalContactDetails, changeContactDetails, renameContact } from '../../state/personal-contact.actions';
 import { Address } from '../../models/address.model';
 import { ConfirmationService } from 'primeng/api';
 import { ChangeContactDetailsRequest } from '../../requests/change-contact-details.request';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ChangeContactDetailsComponent } from '../change-contact-details/change-contact-details.component';
+import { RenameContactDialogComponent } from '../rename-contact-dialog/rename-contact-dialog.component';
+import { RenameContactRequest } from '../../requests/rename-contact.request';
 
 @Component({
   selector: 'app-personal-contact-details',
@@ -62,5 +64,16 @@ export class PersonalContactDetailsComponent implements OnInit {
       .onClose
       .pipe(filter(request => !!request))
       .subscribe((request: ChangeContactDetailsRequest) => this.store.dispatch(changeContactDetails({ id: contact.id, request })));
+  }
+
+  rename(contact: PersonalContactDetail) {
+    this.dialogService.open(RenameContactDialogComponent, {
+      header: 'Rename Contact',
+      width: '60%',
+      data: contact,
+    })
+      .onClose
+      .pipe(filter(request => !!request))
+      .subscribe((request: RenameContactRequest) => this.store.dispatch(renameContact({ id: contact.id, request })));
   }
 }
