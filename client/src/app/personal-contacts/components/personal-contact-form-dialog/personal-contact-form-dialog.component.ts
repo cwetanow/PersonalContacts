@@ -9,6 +9,7 @@ import { AddContactRequest } from '../../requests/add-contact.request';
 })
 export class PersonalContactFormDialogComponent implements OnInit {
   form: FormGroup;
+
   @Input() display = false;
 
   @Output() saveForm = new EventEmitter<AddContactRequest>();
