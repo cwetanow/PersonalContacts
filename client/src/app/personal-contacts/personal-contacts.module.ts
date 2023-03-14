@@ -8,6 +8,7 @@ import { PersonalContactDetailsComponent } from './components/personal-contact-d
 import { RouterModule } from '@angular/router';
 import { RenameContactDialogComponent } from './components/rename-contact-dialog/rename-contact-dialog.component';
 import { ChangeContactDetailsComponent } from './components/change-contact-details/change-contact-details.component';
+import { PersonalContactsListComponent } from './components/personal-contacts-list/personal-contacts-list.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { ChangeContactDetailsComponent } from './components/change-contact-detai
     PersonalContactFormDialogComponent,
     PersonalContactDetailsComponent,
     RenameContactDialogComponent,
-    ChangeContactDetailsComponent
+    ChangeContactDetailsComponent,
+    PersonalContactsListComponent
   ],
   providers: [
     PersonalContactEffects

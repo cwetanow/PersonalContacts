@@ -8,37 +8,6 @@
   </span>
 </form>
 
-<p-table *ngIf="contacts$ | async as contacts"
-         [value]="contacts"
-         [tableStyle]="{'min-width': '50rem'}">
-  <ng-template pTemplate="header">
-    <tr>
-      <th>
-        <button pButton
-                pRipple
-                type="button"
-                icon="pi pi-plus"
-                class="p-button-rounded p-button-info"
-                (click)="addContact()"></button>
-      </th>
-      <th>Name</th>
-      <th>Address</th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body"
-               let-contact
-               let-expanded="expanded">
-    <tr>
-      <td>
-        <button pButton
-                pRipple
-                type="button"
-                icon="pi pi-user"
-                [routerLink]="['/contacts', contact.id ]"
-                class="p-button-rounded p-button-info"></button>
-      </td>
-      <td> {{contact.fullName}}</td>
-      <td>{{contact.address}}</td>
-    </tr>
-  </ng-template>
-</p-table>
+<app-personal-contacts-list *ngIf="contacts$ | async as contacts"
+                            [contacts]="contacts"
+                            (addContact)="addContact()"></app-personal-contacts-list>
