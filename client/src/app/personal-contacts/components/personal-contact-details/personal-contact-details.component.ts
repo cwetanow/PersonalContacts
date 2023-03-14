@@ -4,9 +4,10 @@ import { Observable, filter, map, distinct, tap } from 'rxjs';
 import { PersonalContactsState } from '../../state/personal-contact.reducer';
 import { PersonalContactDetail } from '../../models/personal-contact-details.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { deleteContact, loadPersonalContactDetails } from '../../state/personal-contact.actions';
+import { deleteContact, loadPersonalContactDetails, changeContactDetails } from '../../state/personal-contact.actions';
 import { Address } from '../../models/address.model';
 import { ConfirmationService } from 'primeng/api';
+import { ChangeContactDetailsRequest } from '../../requests/change-contact-details.request';
 
 @Component({
   selector: 'app-personal-contact-details',
@@ -14,6 +15,8 @@ import { ConfirmationService } from 'primeng/api';
   styleUrls: ['./personal-contact-details.component.scss']
 })
 export class PersonalContactDetailsComponent implements OnInit {
+
+  isEditMode = false;
 
   contact$: Observable<PersonalContactDetail>;
 
@@ -47,5 +50,9 @@ export class PersonalContactDetailsComponent implements OnInit {
       message: 'Are you sure that you want remove this contact?',
       accept: () => this.store.dispatch(deleteContact({ contactId: id }))
     });
+  }
+
+  saveChanges(id: string, request: ChangeContactDetailsRequest) {
+    this.store.dispatch(changeContactDetails({ id, request }));
   }
 }

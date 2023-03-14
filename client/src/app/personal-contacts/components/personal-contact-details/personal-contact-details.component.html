@@ -10,6 +10,7 @@
 
     <ng-template pTemplate="footer">
       <p-button label="Change Details"
+                (click)="isEditMode = true"
                 icon="pi pi-pencil"></p-button>
 
       <p-button label="Delete Contact"
@@ -22,4 +23,9 @@
 
   <p-confirmDialog header="Confirmation"
                    icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
+  <app-change-contact-details *ngIf="isEditMode"
+                              [display]="isEditMode"
+                              [contact]="contact"
+                              (saveForm)="saveChanges(contact.id, $event)"></app-change-contact-details>
 </ng-container>

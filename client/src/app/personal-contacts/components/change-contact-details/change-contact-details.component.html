@@ -1,4 +1,4 @@
-<p-dialog header="Add Contact"
+<p-dialog header="Change Details"
           [(visible)]="display"
           [modal]="true"
           [style]="{width: '50vw'}"
@@ -6,20 +6,6 @@
           [resizable]="false">
 
   <form [formGroup]="form">
-    <div class="p-field">
-      <label for="firstName">First Name</label>
-      <input type="text"
-             id="firstName"
-             pInputText
-             formControlName="firstName">
-    </div>
-    <div class="p-field">
-      <label for="lastName">Last Name</label>
-      <input type="text"
-             id="lastName"
-             pInputText
-             formControlName="lastName">
-    </div>
     <div class="p-field">
       <label for="dateOfBirth">Date of Birth</label>
       <p-calendar id="dateOfBirth"
