@@ -1,8 +1,7 @@
-import { outputAst } from '@angular/compiler';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { PersonalContactDetail } from '../../models/personal-contact-details.model';
-import { ChangeContactRequest } from '../../requests/change-contact.request';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { AddContactRequest } from '../../requests/add-contact.request';
 
 @Component({
   selector: 'app-personal-contact-form-dialog',
@@ -11,15 +10,8 @@ import { ChangeContactRequest } from '../../requests/change-contact.request';
 })
 export class PersonalContactFormDialogComponent implements OnInit {
   form: FormGroup;
-  model: ChangeContactRequest;
 
-  @Input() display = false;
-
-  @Output() saveForm = new EventEmitter<ChangeContactRequest>();
-
-  constructor(private fb: FormBuilder) {
-
-  }
+  constructor(private fb: FormBuilder, private ref: DynamicDialogRef) { }
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -31,15 +23,14 @@ export class PersonalContactFormDialogComponent implements OnInit {
         city: ['', Validators.required],
         zipCode: ['']
       }),
-      phoneNumber: ['', Validators.pattern(/^\d{10}$/)],
-      iban: ['', Validators.pattern(/^[A-Z]{2}\d{2}\s?\d{4}\s?\d{4}\s?\d{4}\s?\d{4}\s?\d{2}$/)]
+      phoneNumber: ['', Validators.compose([Validators.required, Validators.pattern(/^\+?\d{3,}/)])],
+      iban: ['', [Validators.required, Validators.pattern(/^[A-Z]{2}/)]]
     });
 
   }
 
   save() {
-    const request = this.form.value as ChangeContactRequest;
-    this.saveForm.emit(request);
+    this.ref.close(this.form.value);
   }
 
 }

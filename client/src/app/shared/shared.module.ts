@@ -5,6 +5,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
+import { DynamicDialogModule, DialogService } from 'primeng/dynamicdialog';
 import { CalendarModule } from 'primeng/calendar';
 import { CardModule } from 'primeng/card';
 import { HttpClientModule } from '@angular/common/http';
@@ -25,7 +26,8 @@ const primeModules = [
   ConfirmDialogModule,
   DialogModule,
   CalendarModule,
-  CardModule
+  CardModule,
+  DynamicDialogModule
 ];
 
 @NgModule({
@@ -38,7 +40,8 @@ const primeModules = [
     ...primeModules
   ],
   providers: [
-    ConfirmationService
+    ConfirmationService,
+    DialogService
   ]
 })
 export class SharedModule { }

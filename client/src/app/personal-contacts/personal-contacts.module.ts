@@ -6,6 +6,9 @@ import { PersonalContactEffects } from './state/personal-contact.effects';
 import { PersonalContactFormDialogComponent } from './components/personal-contact-form-dialog/personal-contact-form-dialog.component';
 import { PersonalContactDetailsComponent } from './components/personal-contact-details/personal-contact-details.component';
 import { RouterModule } from '@angular/router';
+import { RenameContactDialogComponent } from './components/rename-contact-dialog/rename-contact-dialog.component';
+import { ChangeContactDetailsComponent } from './components/change-contact-details/change-contact-details.component';
+import { PersonalContactsListComponent } from './components/personal-contacts-list/personal-contacts-list.component';
 
 @NgModule({
   imports: [
@@ -16,7 +19,10 @@ import { RouterModule } from '@angular/router';
   declarations: [
     PersonalContactsComponent,
     PersonalContactFormDialogComponent,
-    PersonalContactDetailsComponent
+    PersonalContactDetailsComponent,
+    RenameContactDialogComponent,
+    ChangeContactDetailsComponent,
+    PersonalContactsListComponent
   ],
   providers: [
     PersonalContactEffects

@@ -1,4 +1,5 @@
-﻿using Application.Commands;
+﻿using Api.Requests;
+using Application.Commands;
 using Application.Models;
 using Application.Queries;
 using MediatR;
@@ -12,10 +13,7 @@ public class PersonalContactsController : ControllerBase
 {
     private readonly IMediator mediator;
 
-    public PersonalContactsController(IMediator mediator)
-    {
-        this.mediator = mediator;
-    }
+    public PersonalContactsController(IMediator mediator) => this.mediator = mediator;
 
     [HttpGet]
     public async Task<IEnumerable<PersonalContactSimpleDto>> GetContacts(string? nameSearchTerm, CancellationToken cancellationToken)
@@ -32,4 +30,12 @@ public class PersonalContactsController : ControllerBase
     [HttpDelete("{id}")]
     public async Task RemoveContact(Guid id, CancellationToken cancellationToken)
         => await mediator.Send(new RemoveContact.Command(id), cancellationToken);
+
+    [HttpPut("{id}/Rename")]
+    public async Task<PersonalContactSimpleDto> RenameContact(Guid id, RenameContactRequest request, CancellationToken cancellationToken)
+        => await mediator.Send(new RenameContact.Command(id, request.FirstName, request.LastName), cancellationToken);
+
+    [HttpPut("{id}/Details")]
+    public async Task<PersonalContactDetailsDto> ChangeDetails(Guid id, ChangeContactDetailsRequest request, CancellationToken cancellationToken)
+        => await mediator.Send(new ChangeContactDetails.Command(id, request.DateOfBirth, request.Address, request.PhoneNumber, request.Iban), cancellationToken);
 }

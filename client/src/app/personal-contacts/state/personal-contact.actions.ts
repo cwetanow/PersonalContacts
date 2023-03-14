@@ -1,7 +1,9 @@
 import { createAction, props } from '@ngrx/store';
 import { PersonalContactSimple } from '../models/personal-contact-simple.model';
-import { ChangeContactRequest } from '../requests/change-contact.request';
 import { PersonalContactDetail } from '../models/personal-contact-details.model';
+import { RenameContactRequest } from '../requests/rename-contact.request';
+import { ChangeContactDetailsRequest } from '../requests/change-contact-details.request';
+import { AddContactRequest } from '../requests/add-contact.request';
 
 export enum PersonalContactActions {
   LoadContacts = '[PersonalContact] Load Contacts',
@@ -16,8 +18,11 @@ export enum PersonalContactActions {
   LoadContactDetails = '[PersonalContact] Load Contact Details',
   LoadContactDetailsSuccess = '[PersonalContact] Load Contact Details Success',
 
-  UpdateContact = '[PersonalContact] Update Contact',
-  UpdateContactSuccess = '[PersonalContact] Update Contact Success',
+  RenameContact = '[PersonalContact] Rename Contact',
+  RenameContactSuccess = '[PersonalContact] Rename Contact Success',
+
+  ChangeContactDetails = '[PersonalContact] Change Contact Details',
+  ChangeContactDetailsSuccess = '[PersonalContact] Change Contact Details Success',
 }
 
 export const loadPersonalContacts = createAction(
@@ -52,7 +57,7 @@ export const loadPersonalContactDetailsSuccess = createAction(
 
 export const addContact = createAction(
   PersonalContactActions.AddContact,
-  props<{ request: ChangeContactRequest }>()
+  props<{ request: AddContactRequest }>()
 );
 
 export const addContactSuccess = createAction(
@@ -60,12 +65,22 @@ export const addContactSuccess = createAction(
   props<{ contact: PersonalContactDetail }>()
 );
 
-export const updateContact = createAction(
-  PersonalContactActions.UpdateContact,
-  props<{ id: string, request: ChangeContactRequest }>()
+export const renameContact = createAction(
+  PersonalContactActions.RenameContact,
+  props<{ id: string, request: RenameContactRequest }>()
 );
 
-export const updateContactSuccess = createAction(
-  PersonalContactActions.UpdateContactSuccess,
+export const renameContactSuccess = createAction(
+  PersonalContactActions.RenameContactSuccess,
+  props<{ updatedContact: PersonalContactSimple }>()
+);
+
+export const changeContactDetails = createAction(
+  PersonalContactActions.ChangeContactDetails,
+  props<{ id: string, request: ChangeContactDetailsRequest }>()
+);
+
+export const changeContactDetailsSuccess = createAction(
+  PersonalContactActions.ChangeContactDetailsSuccess,
   props<{ updatedContact: PersonalContactDetail }>()
 );

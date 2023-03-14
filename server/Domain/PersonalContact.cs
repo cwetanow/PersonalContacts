@@ -14,7 +14,7 @@ public class PersonalContact : Entity
         PhoneNumber = phoneNumber;
         Iban = iban;
 
-        FullName = $"{FirstName} {LastName}";
+        this.SetFullName();
     }
 
     public string FirstName { get; private set; }
@@ -24,4 +24,32 @@ public class PersonalContact : Entity
     public Address Address { get; private set; }
     public PhoneNumber PhoneNumber { get; private set; }
     public Iban Iban { get; private set; }
+
+    public void Rename(string firstName, string lastName)
+    {
+        if (!string.IsNullOrEmpty(firstName))
+        {
+            this.FirstName = firstName;
+        }
+
+        if (!string.IsNullOrEmpty(lastName))
+        {
+            this.LastName = lastName;
+        }
+
+        this.SetFullName();
+    }
+
+    public void ChangeDetails(DateOfBirth dateOfBirth, Address address, Iban iban, PhoneNumber phoneNumber)
+    {
+        this.DateOfBirth = dateOfBirth;
+        this.Address = address;
+        this.Iban = iban;
+        this.PhoneNumber = phoneNumber;
+    }
+
+    private void SetFullName()
+    {
+        FullName = $"{FirstName} {LastName}";
+    }
 }
