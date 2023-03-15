@@ -1,62 +1,71 @@
 <form [formGroup]="form">
-  <div class="p-field">
-    <label for="firstName">First Name</label>
-    <input type="text"
-           id="firstName"
-           pInputText
-           formControlName="firstName">
-  </div>
-  <div class="p-field">
-    <label for="lastName">Last Name</label>
-    <input type="text"
-           id="lastName"
-           pInputText
-           formControlName="lastName">
-  </div>
-  <div class="p-field">
-    <label for="dateOfBirth">Date of Birth</label>
-    <p-calendar id="dateOfBirth"
-                formControlName="dateOfBirth"
-                [showIcon]="true"
-                dateFormat="dd/mm/yy"></p-calendar>
+  <div class="p-fluid grid">
+    <div class="input-group">
+      <div class="p-field">
+        <label for="firstName">First Name</label>
+        <input type="text"
+               id="firstName"
+               pInputText
+               formControlName="firstName">
+      </div>
+      <div class="p-field">
+        <label for="lastName">Last Name</label>
+        <input type="text"
+               id="lastName"
+               pInputText
+               formControlName="lastName">
+      </div>
+    </div>
+    <div class="input-group">
+      <div class="p-field">
+        <label for="dateOfBirth">Date of Birth</label>
+        <p-calendar id="dateOfBirth"
+                    formControlName="dateOfBirth"
+                    [showIcon]="true"
+                    dateFormat="dd/mm/yy"></p-calendar>
 
-  </div>
-  <div formGroupName="address">
-    <div class="p-field">
-      <label for="street">Street</label>
-      <input type="text"
-             id="street"
-             pInputText
-             formControlName="street">
+      </div>
     </div>
-    <div class="p-field">
-      <label for="city">City</label>
-      <input type="text"
-             id="city"
-             pInputText
-             formControlName="city">
+    <div class="input-group"
+         formGroupName="address">
+      <div class="p-field">
+        <label for="street">Street</label>
+        <input type="text"
+               id="street"
+               pInputText
+               formControlName="street">
+      </div>
+      <div class="p-field">
+        <label for="city">City</label>
+        <input type="text"
+               id="city"
+               pInputText
+               formControlName="city">
+      </div>
+      <div class="p-field">
+        <label for="zipCode">Zip Code</label>
+        <input type="text"
+               id="zipCode"
+               pInputText
+               formControlName="zipCode">
+      </div>
     </div>
-    <div class="p-field">
-      <label for="zipCode">Zip Code</label>
-      <input type="text"
-             id="zipCode"
-             pInputText
-             formControlName="zipCode">
+    <div class="input-group">
+      <div class="p-field">
+        <label for="phoneNumber">Phone Number</label>
+        <input type="text"
+               id="phoneNumber"
+               pInputText
+               formControlName="phoneNumber">
+      </div>
+      <div class="p-field">
+        <label for="iban">IBAN</label>
+        <input type="text"
+               id="iban"
+               pInputText
+               formControlName="iban">
+      </div>
     </div>
-  </div>
-  <div class="p-field">
-    <label for="phoneNumber">Phone Number</label>
-    <input type="text"
-           id="phoneNumber"
-           pInputText
-           formControlName="phoneNumber">
-  </div>
-  <div class="p-field">
-    <label for="iban">IBAN</label>
-    <input type="text"
-           id="iban"
-           pInputText
-           formControlName="iban">
   </div>
 </form>
 

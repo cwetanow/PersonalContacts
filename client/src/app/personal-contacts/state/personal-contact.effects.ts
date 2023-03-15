@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, exhaustMap } from 'rxjs/operators';
+import { map, exhaustMap, debounceTime } from 'rxjs/operators';
 import { PersonalContactsResource } from '../personal-contacts.resource';
 import { loadPersonalContactsSuccess, PersonalContactActions, deleteContactSuccess, addContactSuccess, loadPersonalContactDetailsSuccess, renameContactSuccess, changeContactDetailsSuccess } from './personal-contact.actions';
 import { Router } from '@angular/router';
