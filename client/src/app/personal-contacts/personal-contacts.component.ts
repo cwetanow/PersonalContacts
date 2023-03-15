@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { debounceTime, distinct, filter, Observable } from 'rxjs';
+import { debounce, debounceTime, distinct, distinctUntilChanged, filter, Observable, tap } from 'rxjs';
 import { PersonalContactSimple } from './models/personal-contact-simple.model';
 import { addContact, loadPersonalContacts } from './state/personal-contact.actions';
 import { PersonalContactsState } from './state/personal-contact.reducer';
@@ -37,9 +37,8 @@ export class PersonalContactsComponent implements OnInit {
 
     this.searchForm.controls['nameSearchTerm'].valueChanges
       .pipe(
-        filter(value => value.length > 2),
-        debounceTime(500),
-        distinct()
+        debounceTime(100),
+        distinctUntilChanged()
       )
       .subscribe(value => this.store.dispatch(loadPersonalContacts({ nameSearchTerm: value })))
   }

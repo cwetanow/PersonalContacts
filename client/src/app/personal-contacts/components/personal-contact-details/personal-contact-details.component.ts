@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, filter, map, distinct, tap } from 'rxjs';
+import { Observable, filter, map, distinctUntilChanged } from 'rxjs';
 import { PersonalContactsState } from '../../state/personal-contact.reducer';
 import { PersonalContactDetail } from '../../models/personal-contact-details.model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { deleteContact, loadPersonalContactDetails, changeContactDetails, renameContact } from '../../state/personal-contact.actions';
 import { Address } from '../../models/address.model';
 import { ConfirmationService } from 'primeng/api';
@@ -39,7 +39,7 @@ export class PersonalContactDetailsComponent implements OnInit {
     this.route.params.pipe(
       map(params => params['id']),
       filter(id => !!id),
-      distinct()
+      distinctUntilChanged()
     )
       .subscribe(id => this.store.dispatch(loadPersonalContactDetails({ id })));
   }
