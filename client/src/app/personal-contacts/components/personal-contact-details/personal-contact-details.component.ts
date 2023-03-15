@@ -12,13 +12,14 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { ChangeContactDetailsComponent } from '../change-contact-details/change-contact-details.component';
 import { RenameContactDialogComponent } from '../rename-contact-dialog/rename-contact-dialog.component';
 import { RenameContactRequest } from '../../requests/rename-contact.request';
+import { DestroyableComponent } from '../../../common/destroyable.component';
 
 @Component({
   selector: 'app-personal-contact-details',
   templateUrl: './personal-contact-details.component.html',
   styleUrls: ['./personal-contact-details.component.scss']
 })
-export class PersonalContactDetailsComponent implements OnInit {
+export class PersonalContactDetailsComponent extends DestroyableComponent implements OnInit {
 
   contact$: Observable<PersonalContactDetail>;
 
@@ -28,6 +29,7 @@ export class PersonalContactDetailsComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private dialogService: DialogService
   ) {
+    super();
     this.contact$ = this.store.select(s => s.personalContacts.selectedContact)
       .pipe(
         filter(contact => !!contact),
@@ -36,11 +38,12 @@ export class PersonalContactDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.params.pipe(
-      map(params => params['id']),
-      filter(id => !!id),
-      distinctUntilChanged()
-    )
+    this.preventLeak(this.route.params)
+      .pipe(
+        map(params => params['id']),
+        filter(id => !!id),
+        distinctUntilChanged()
+      )
       .subscribe(id => this.store.dispatch(loadPersonalContactDetails({ id })));
   }
 
@@ -56,24 +59,26 @@ export class PersonalContactDetailsComponent implements OnInit {
   }
 
   changeDetails(contact: PersonalContactDetail) {
-    this.dialogService.open(ChangeContactDetailsComponent, {
-      header: 'Change Details',
-      width: '60%',
-      data: contact,
-    })
-      .onClose
-      .pipe(filter(request => !!request))
+    this.preventLeak(
+      this.dialogService.open(ChangeContactDetailsComponent, {
+        header: 'Change Details',
+        width: '60%',
+        data: contact,
+      })
+        .onClose
+        .pipe(filter(request => !!request)))
       .subscribe((request: ChangeContactDetailsRequest) => this.store.dispatch(changeContactDetails({ id: contact.id, request })));
   }
 
   rename(contact: PersonalContactDetail) {
-    this.dialogService.open(RenameContactDialogComponent, {
-      header: 'Rename Contact',
-      width: '60%',
-      data: contact,
-    })
-      .onClose
-      .pipe(filter(request => !!request))
+    this.preventLeak(
+      this.dialogService.open(RenameContactDialogComponent, {
+        header: 'Rename Contact',
+        width: '60%',
+        data: contact,
+      })
+        .onClose
+        .pipe(filter(request => !!request)))
       .subscribe((request: RenameContactRequest) => this.store.dispatch(renameContact({ id: contact.id, request })));
   }
 }
