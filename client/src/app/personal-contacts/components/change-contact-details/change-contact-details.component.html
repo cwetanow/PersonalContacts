@@ -1,12 +1,13 @@
 <form [formGroup]="form">
   <div class="p-fluid grid">
-    <div class="p-field">
-      <label for="dateOfBirth">Date of Birth</label>
-      <p-calendar id="dateOfBirth"
-                  formControlName="dateOfBirth"
-                  [showIcon]="true"
-                  dateFormat="dd/mm/yy"></p-calendar>
-
+    <div class="input-group">
+      <div class="p-field">
+        <label for="dateOfBirth">Date of Birth</label>
+        <p-calendar id="dateOfBirth"
+                    formControlName="dateOfBirth"
+                    [showIcon]="true"
+                    dateFormat="dd/mm/yy"></p-calendar>
+      </div>
     </div>
     <div class="input-group"
          formGroupName="address">
