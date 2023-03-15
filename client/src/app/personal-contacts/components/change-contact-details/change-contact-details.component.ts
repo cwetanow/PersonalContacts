@@ -16,7 +16,7 @@ export class ChangeContactDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     const contact = this.config.data!;
-    console.log(typeof contact.dateOfBirth)
+
     this.form = this.formBuilder.group({
       dateOfBirth: [new Date(contact.dateOfBirth), Validators.required],
       address: this.formBuilder.group({

@@ -47,7 +47,10 @@ export class PersonalContactsComponent extends DestroyableComponent implements O
   addContact() {
     this.preventLeak(
       this.dialogService.open(PersonalContactFormDialogComponent,
-        {})
+        {
+          header: 'Add Contact',
+          styleClass: 'overflow'
+        })
         .onClose
         .pipe(
           filter(request => !!request)

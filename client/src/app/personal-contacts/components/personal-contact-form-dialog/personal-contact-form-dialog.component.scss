@@ -16,3 +16,13 @@ p {
 :host ::ng-deep .p-dialog .p-button {
   min-width: 6rem;
 }
+
+.input-group {
+  display: flex;
+  justify-content: space-between;
+
+  .p-field {
+    flex: 1 1 auto;
+    margin: 5px;
+  }
+}
