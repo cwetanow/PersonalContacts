@@ -5,6 +5,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
+import { MenubarModule } from 'primeng/menubar';
 import { DynamicDialogModule, DialogService } from 'primeng/dynamicdialog';
 import { CalendarModule } from 'primeng/calendar';
 import { CardModule } from 'primeng/card';
@@ -27,7 +28,8 @@ const primeModules = [
   DialogModule,
   CalendarModule,
   CardModule,
-  DynamicDialogModule
+  DynamicDialogModule,
+  MenubarModule
 ];
 
 @NgModule({

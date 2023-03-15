@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'personal-contacts-client';
+  menuItems: MenuItem[] = [
+    {
+      label: 'Personal Contacts',
+      icon: 'pi pi-phone',
+      routerLink: '/contacts'
+    }
+  ]
 }
