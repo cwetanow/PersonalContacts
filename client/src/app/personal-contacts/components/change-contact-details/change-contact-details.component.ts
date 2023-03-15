@@ -1,9 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Store } from '@ngrx/store';
-import { Observable, map, filter } from 'rxjs';
-import { PersonalContactsState } from '../../state/personal-contact.reducer';
-import { ChangeContactDetailsRequest } from '../../requests/change-contact-details.request';
 import { PersonalContactDetail } from '../../models/personal-contact-details.model';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
@@ -20,9 +16,9 @@ export class ChangeContactDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     const contact = this.config.data!;
-
+    console.log(typeof contact.dateOfBirth)
     this.form = this.formBuilder.group({
-      dateOfBirth: [contact.dateOfBirth, Validators.required],
+      dateOfBirth: [new Date(contact.dateOfBirth), Validators.required],
       address: this.formBuilder.group({
         street: [contact.address.street, Validators.required],
         city: [contact.address.city, Validators.required],
