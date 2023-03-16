@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpEvent, HttpHandler, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import * as moment from 'moment';
-import { forEach } from 'cypress/types/lodash';
 
 @Injectable()
 export class FormatDateInterceptor implements HttpInterceptor {
@@ -16,7 +14,7 @@ export class FormatDateInterceptor implements HttpInterceptor {
 
   private serializeDates(obj: any): any {
     if (obj instanceof Date) {
-      return moment(obj).format('YYYY-MM-DD');
+      return this.serializeDate(obj);
     }
 
     if (obj instanceof Object) {
@@ -30,4 +28,12 @@ export class FormatDateInterceptor implements HttpInterceptor {
 
     return obj;
   }
+
+  private serializeDate(date: Date) {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
 }
