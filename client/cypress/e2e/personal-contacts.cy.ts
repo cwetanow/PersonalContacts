@@ -28,6 +28,17 @@ function changeDetails(dateOfBirth: string, dayOfBirth: number, street: string, 
   cy.get('input#iban').clear().type(iban);
 }
 
+function addContact() {
+  cy.get('#addContact').click();
+
+  rename(contact.firstName, contact.lastName);
+  changeDetails(birthDate, day, contact.street, contact.city, contact.zipCode, contact.phoneNumber, contact.iban);
+
+  cy.get('#saveButton').click();
+
+  cy.visit('http://localhost:4200');
+}
+
 describe('Personal Contacts Page', () => {
   beforeEach(() => {
     cy.intercept('GET', '/api/v1/PersonalContacts').as('getContactsRequest');
@@ -37,20 +48,6 @@ describe('Personal Contacts Page', () => {
 
   it('Should redirect to /contacts', () => {
     cy.url().should('include', '/contacts');
-  });
-
-  it('Should display table with contacts', () => {
-    cy.wait('@getContactsRequest')
-      .then(interception => {
-        const contacts = interception.response ? interception.response.body : [];
-
-        cy.get('.p-datatable-tbody tr')
-          .each((row, index) => {
-            const rowContact = contacts[index];
-            expect(row.text()).to.contain(rowContact.fullName);
-            expect(row.text()).to.contain(rowContact.address);
-          });
-      });
   });
 
   it('Should add a contact and redirect to details', () => {
@@ -67,6 +64,20 @@ describe('Personal Contacts Page', () => {
       .then(interception => {
         const id = interception.response ? interception.response.body.id : '';
         return cy.url().should('include', `/contacts/${id}`);
+      });
+  });
+
+  it('Should display table with contacts', () => {
+    cy.wait('@getContactsRequest')
+      .then(interception => {
+        const contacts = interception.response ? interception.response.body : [];
+
+        cy.get('.p-datatable-tbody tr')
+          .each((row, index) => {
+            const rowContact = contacts[index];
+            expect(row.text()).to.contain(rowContact.fullName);
+            expect(row.text()).to.contain(rowContact.address);
+          });
       });
   });
 
@@ -152,6 +163,8 @@ describe('Personal Contacts Page', () => {
 
   it('Should delete contact', () => {
     let countBeforeDeletion = 0;
+
+    addContact();
 
     cy.get('.p-datatable-tbody tr')
       .then(elements => {
