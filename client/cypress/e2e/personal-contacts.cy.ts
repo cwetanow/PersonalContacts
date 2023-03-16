@@ -30,6 +30,8 @@ function changeDetails(dateOfBirth: string, dayOfBirth: number, street: string, 
 
 describe('Personal Contacts Page', () => {
   beforeEach(() => {
+    cy.intercept('GET', '/api/v1/PersonalContacts').as('getContactsRequest');
+
     cy.visit('http://localhost:4200');
   });
 
@@ -38,7 +40,17 @@ describe('Personal Contacts Page', () => {
   });
 
   it('Should display table with contacts', () => {
+    cy.wait('@getContactsRequest')
+      .then(interception => {
+        const contacts = interception.response ? interception.response.body : [];
 
+        cy.get('.p-datatable-tbody tr')
+          .each((row, index) => {
+            const rowContact = contacts[index];
+            expect(row.text()).to.contain(rowContact.fullName);
+            expect(row.text()).to.contain(rowContact.address);
+          });
+      });
   });
 
   it('Should add a contact and redirect to details', () => {
@@ -103,7 +115,7 @@ describe('Personal Contacts Page', () => {
     cy.get('#changeDetailsButton').click();
 
     const newDay = 12;
-    const newBirthDate = `${newDay.toString().padStart(2, '0')}/01/2002`;
+    const newBirthDate = new Date(2002, 0, newDay);  // Month is zero-based (0 = January)
 
     const newStreet = 'Johh Mary 51';
     const newCity = 'New Quahog';
@@ -111,19 +123,20 @@ describe('Personal Contacts Page', () => {
     const newPhoneNumber = '+359889184932';
     const newIban = 'DE68500105178297336485';
 
-    changeDetails(newBirthDate, newDay, newStreet, newCity, newZipCode, newPhoneNumber, newIban);
+    changeDetails(newBirthDate.toString(), newDay, newStreet, newCity, newZipCode, newPhoneNumber, newIban);
 
     cy.get('#changeDetailsSaveButton').click();
 
     cy.get('.p-card-subtitle').should('contain.text', `${newStreet}, ${newCity} ${newZipCode}`);
+    cy.log(new Date(newBirthDate).toString());
 
     const expectedDateOfBirth = new Date(newBirthDate).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',
       day: 'numeric'
     });
-
-    // cy.get('#dateOfBirth').should('contain.text', expectedDateOfBirth);
+    cy.log(expectedDateOfBirth);
+    cy.get('#dateOfBirth').should('contain.text', expectedDateOfBirth);
 
     cy.get('#phoneNumber').should('contain.text', newPhoneNumber);
     cy.get('#iban').should('contain.text', newIban);
