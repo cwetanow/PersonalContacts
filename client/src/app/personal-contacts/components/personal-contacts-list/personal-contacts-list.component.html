@@ -5,6 +5,7 @@
     <tr>
       <th>
         <button pButton
+                id="addContact"
                 pRipple
                 type="button"
                 icon="pi pi-plus"
@@ -25,7 +26,7 @@
                 type="button"
                 icon="pi pi-user"
                 [routerLink]="['/contacts', contact.id ]"
-                class="p-button-rounded p-button-info"></button>
+                class="p-button-rounded p-button-info show-details-button"></button>
       </td>
       <td> {{contact.fullName}}</td>
       <td>{{contact.address}}</td>
