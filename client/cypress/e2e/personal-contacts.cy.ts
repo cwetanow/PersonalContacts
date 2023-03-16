@@ -110,36 +110,44 @@ describe('Personal Contacts Page', () => {
   });
 
   it('Should change details', () => {
+    cy.intercept('GET', '/api/v1/PersonalContacts/*').as('getContactRequest');
+
     cy.get('.show-details-button').first().click();
 
-    cy.get('#changeDetailsButton').click();
+    cy.wait('@getContactRequest')
+      .then(interception => {
+        const contactDetail = interception.response ? interception.response.body : {};
+        cy.get('#changeDetailsButton').click();
 
-    const newDay = 12;
-    const newBirthDate = new Date(2002, 0, newDay);  // Month is zero-based (0 = January)
+        const oldDateOfBirth = new Date(contactDetail.dateOfBirth);
 
-    const newStreet = 'Johh Mary 51';
-    const newCity = 'New Quahog';
-    const newZipCode = '785';
-    const newPhoneNumber = '+359889184932';
-    const newIban = 'DE68500105178297336485';
+        const newDay = 12;
+        const newBirthDate = new Date(oldDateOfBirth.getFullYear(), oldDateOfBirth.getMonth(), newDay);
 
-    changeDetails(newBirthDate.toString(), newDay, newStreet, newCity, newZipCode, newPhoneNumber, newIban);
+        const newStreet = 'Johh Mary 51';
+        const newCity = 'New Quahog';
+        const newZipCode = '785';
+        const newPhoneNumber = '+359889184932';
+        const newIban = 'DE68500105178297336485';
 
-    cy.get('#changeDetailsSaveButton').click();
+        changeDetails(newBirthDate.toString(), newDay, newStreet, newCity, newZipCode, newPhoneNumber, newIban);
 
-    cy.get('.p-card-subtitle').should('contain.text', `${newStreet}, ${newCity} ${newZipCode}`);
-    cy.log(new Date(newBirthDate).toString());
+        cy.get('#changeDetailsSaveButton').click();
 
-    const expectedDateOfBirth = new Date(newBirthDate).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
-    cy.log(expectedDateOfBirth);
-    cy.get('#dateOfBirth').should('contain.text', expectedDateOfBirth);
+        cy.get('.p-card-subtitle').should('contain.text', `${newStreet}, ${newCity} ${newZipCode}`);
+        cy.log(new Date(newBirthDate).toString());
 
-    cy.get('#phoneNumber').should('contain.text', newPhoneNumber);
-    cy.get('#iban').should('contain.text', newIban);
+        const expectedDateOfBirth = new Date(newBirthDate).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric'
+        });
+        cy.log(expectedDateOfBirth);
+        cy.get('#dateOfBirth').should('contain.text', expectedDateOfBirth);
+
+        cy.get('#phoneNumber').should('contain.text', newPhoneNumber);
+        cy.get('#iban').should('contain.text', newIban);
+      });
   });
 
   it('Should delete contact', () => {
