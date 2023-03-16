@@ -10,20 +10,23 @@
               icon="pi pi-pencil"
               iconPos="left"
               class="p-button-sm"
+              id="renameButton"
               (click)="rename(contact)"></button>
     </ng-template>
 
-    <p>Date of Birth: {{ contact.dateOfBirth | date }} </p>
-    <p>Phone Number: {{ contact.phoneNumber }} </p>
-    <p>IBAN: {{ contact.iban }} </p>
+    <p id="dateOfBirth">Date of Birth: {{ contact.dateOfBirth | date }} </p>
+    <p id="phoneNumber">Phone Number: {{ contact.phoneNumber }} </p>
+    <p id="iban">IBAN: {{ contact.iban }} </p>
 
     <ng-template pTemplate="footer">
       <p-button label="Change Details"
+                id="changeDetailsButton"
                 (click)="changeDetails(contact)"
                 icon="pi pi-pencil"></p-button>
 
       <p-button label="Delete Contact"
                 icon="pi pi-times"
+                id="deleteContactButton"
                 styleClass="p-button-danger"
                 (click)="deleteContact(contact.id)"
                 [style]="{'margin-left': '.5em'}"></p-button>
