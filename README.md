@@ -13,7 +13,7 @@ You will need the following tools:
 Follow these steps to start the database (from the root folder)
 ```
 docker pull postgres
-docker run --name contacts-database -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=VerySecretPassword -p 5432:5432 -d postgres
+docker run --name postgresdb -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=VerySecretPassword -p 5432:5432 -d postgres
 ```
 
 To update the database (from the root folder)
@@ -37,6 +37,9 @@ cd client
 npm install
 npm start
 ```
+
+To run cypress e2e tests (run from `client` folder)
+`npm run test:e2e`
 
 Launch [http://localhost:4200/](http://localhost:4200/) in your browser to view the Web UI
 
