@@ -41,6 +41,23 @@ describe('Personal Contacts Page', () => {
 
   });
 
+  it('Should add a contact and redirect to details', () => {
+    cy.get('#addContact').click();
+
+    rename(contact.firstName, contact.lastName);
+    changeDetails(birthDate, day, contact.street, contact.city, contact.zipCode, contact.phoneNumber, contact.iban);
+
+    cy.intercept('POST', '/api/v1/PersonalContacts').as('addContactRequest');
+
+    cy.get('#saveButton').click();
+
+    cy.wait('@addContactRequest')
+      .then(interception => {
+        const id = interception.response ? interception.response.body.id : '';
+        return cy.url().should('include', `/contacts/${id}`);
+      });
+  });
+
   it('Should display to contact details on details button click', () => {
     cy.intercept('GET', '/api/v1/PersonalContacts/*').as('getContactRequest');
 
@@ -80,36 +97,37 @@ describe('Personal Contacts Page', () => {
     cy.get('.p-card-title').should('contain.text', `${newFirstName} ${newLastName}`);
   });
 
-  // it('Should change details', () => {
-  //   cy.get('.show-details-button').first().click();
+  it('Should change details', () => {
+    cy.get('.show-details-button').first().click();
 
-  //   cy.get('#changeDetailsButton').click();
+    cy.get('#changeDetailsButton').click();
 
-  //   const newDay = 12;
-  //   const newBirthDate = `${newDay.toString().padStart(2, '0')}/03/2001`;
-  //   const newStreet = 'Johh Mary 51';
-  //   const newCity = 'New Quahog';
-  //   const newZipCode = '785';
-  //   const newPhoneNumber = '+359889184932';
-  //   const newIban = 'DE68500105178297336485';
+    const newDay = 12;
+    const newBirthDate = `${newDay.toString().padStart(2, '0')}/01/2002`;
 
-  //   changeDetails(newBirthDate, newDay, newStreet, newCity, newZipCode, newPhoneNumber, newIban);
+    const newStreet = 'Johh Mary 51';
+    const newCity = 'New Quahog';
+    const newZipCode = '785';
+    const newPhoneNumber = '+359889184932';
+    const newIban = 'DE68500105178297336485';
 
-  //   cy.get('#changeDetailsSaveButton').click();
+    changeDetails(newBirthDate, newDay, newStreet, newCity, newZipCode, newPhoneNumber, newIban);
 
-  //   cy.get('.p-card-subtitle').should('contain.text', `${newStreet}, ${newCity} ${newZipCode}`);
+    cy.get('#changeDetailsSaveButton').click();
 
-  //   const expectedDateOfBirth = new Date(newBirthDate).toLocaleDateString('en-US', {
-  //     year: 'numeric',
-  //     month: 'short',
-  //     day: 'numeric'
-  //   });
+    cy.get('.p-card-subtitle').should('contain.text', `${newStreet}, ${newCity} ${newZipCode}`);
 
-  //   cy.get('#dateOfBirth').should('contain.text', expectedDateOfBirth);
+    const expectedDateOfBirth = new Date(newBirthDate).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
 
-  //   cy.get('#phoneNumber').should('contain.text', newPhoneNumber);
-  //   cy.get('#iban').should('contain.text', newIban);
-  // });
+    // cy.get('#dateOfBirth').should('contain.text', expectedDateOfBirth);
+
+    cy.get('#phoneNumber').should('contain.text', newPhoneNumber);
+    cy.get('#iban').should('contain.text', newIban);
+  });
 
   it('Should delete contact', () => {
     let countBeforeDeletion = 0;
@@ -127,23 +145,6 @@ describe('Personal Contacts Page', () => {
         const countAfterDeletion = elements.length;
 
         expect(countAfterDeletion).to.be.eq(countBeforeDeletion - 1);
-      });
-  })
-
-  it('Should add a contact and redirect to details', () => {
-    cy.get('#addContact').click();
-
-    rename(contact.firstName, contact.lastName);
-    changeDetails(birthDate, day, contact.street, contact.city, contact.zipCode, contact.phoneNumber, contact.iban);
-
-    cy.intercept('POST', '/api/v1/PersonalContacts').as('addContactRequest');
-
-    cy.get('#saveButton').click();
-
-    cy.wait('@addContactRequest')
-      .then(interception => {
-        const id = interception.response ? interception.response.body.id : '';
-        return cy.url().should('include', `/contacts/${id}`);
       });
   });
 });

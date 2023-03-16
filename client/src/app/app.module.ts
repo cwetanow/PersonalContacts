@@ -11,6 +11,8 @@ import { StoreModule } from '@ngrx/store';
 import { personalContactsReducer } from './personal-contacts/state/personal-contact.reducer';
 import { PersonalContactEffects } from './personal-contacts/state/personal-contact.effects';
 import { EffectsModule } from '@ngrx/effects';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormatDateInterceptor } from './common/interceptors/format-date.interceptor';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,13 @@ import { EffectsModule } from '@ngrx/effects';
     StoreModule.forRoot({ personalContacts: personalContactsReducer }),
     EffectsModule.forRoot([PersonalContactEffects]),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: FormatDateInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
