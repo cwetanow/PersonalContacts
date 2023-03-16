@@ -20,11 +20,13 @@
 
     <ng-template pTemplate="footer">
       <p-button label="Change Details"
+                id="changeDetailsButton"
                 (click)="changeDetails(contact)"
                 icon="pi pi-pencil"></p-button>
 
       <p-button label="Delete Contact"
                 icon="pi pi-times"
+                id="deleteContactButton"
                 styleClass="p-button-danger"
                 (click)="deleteContact(contact.id)"
                 [style]="{'margin-left': '.5em'}"></p-button>

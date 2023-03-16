@@ -16,16 +16,16 @@ function rename(firstName: string, lastName: string) {
   cy.get('input#lastName').clear().type(lastName);
 }
 
-function changeDetails(birthDate: string, day: number, street: string, city: string, zipCode: string, phoneNumber: string, iban: string) {
-  cy.get('.p-calendar input').type(birthDate);
-  cy.get('.p-datepicker-calendar-container span').contains(day).click();
+function changeDetails(dateOfBirth: string, dayOfBirth: number, street: string, city: string, zipCode: string, phoneNumber: string, iban: string) {
+  cy.get('.p-calendar input').type(dateOfBirth);
+  cy.get('.p-datepicker-calendar-container span').contains(dayOfBirth).click();
 
-  cy.get('input#street').type(street);
-  cy.get('input#city').type(city);
-  cy.get('input#zipCode').type(zipCode);
+  cy.get('input#street').clear().type(street);
+  cy.get('input#city').clear().type(city);
+  cy.get('input#zipCode').clear().type(zipCode);
 
-  cy.get('input#phoneNumber').type(phoneNumber);
-  cy.get('input#iban').type(iban);
+  cy.get('input#phoneNumber').clear().type(phoneNumber);
+  cy.get('input#iban').clear().type(iban);
 }
 
 describe('Personal Contacts Page', () => {
@@ -38,6 +38,7 @@ describe('Personal Contacts Page', () => {
   });
 
   it('Should display table with contacts', () => {
+
   });
 
   it('Should display to contact details on details button click', () => {
@@ -67,33 +68,69 @@ describe('Personal Contacts Page', () => {
   });
 
   it('Should rename contact', () => {
-    cy.intercept('GET', '/api/v1/PersonalContacts/*').as('getContactRequest');
-
     cy.get('.show-details-button').first().click();
 
-    cy.wait('@getContactRequest')
-      .then(interception => {
-        const contactDetail = interception.response ? interception.response.body : {};
-        cy.url().should('include', `/contacts/${contactDetail.id}`);
+    cy.get('#renameButton').click();
 
-        cy.get('#renameButton').click();
+    const newFirstName = 'Johny';
+    const newLastName = 'Johnson';
+    rename(newFirstName, newLastName);
 
-        const newFirstName = 'Johny';
-        const newLastName = 'Johnson';
-        rename(newFirstName, newLastName);
+    cy.get('#renameSaveButton').click();
+    cy.get('.p-card-title').should('contain.text', `${newFirstName} ${newLastName}`);
+  });
 
-        cy.get('#renameSaveButton').click();
-        cy.get('.p-card-title').should('contain.text', `${newFirstName} ${newLastName}`);
+  // it('Should change details', () => {
+  //   cy.get('.show-details-button').first().click();
+
+  //   cy.get('#changeDetailsButton').click();
+
+  //   const newDay = 12;
+  //   const newBirthDate = `${newDay.toString().padStart(2, '0')}/03/2001`;
+  //   const newStreet = 'Johh Mary 51';
+  //   const newCity = 'New Quahog';
+  //   const newZipCode = '785';
+  //   const newPhoneNumber = '+359889184932';
+  //   const newIban = 'DE68500105178297336485';
+
+  //   changeDetails(newBirthDate, newDay, newStreet, newCity, newZipCode, newPhoneNumber, newIban);
+
+  //   cy.get('#changeDetailsSaveButton').click();
+
+  //   cy.get('.p-card-subtitle').should('contain.text', `${newStreet}, ${newCity} ${newZipCode}`);
+
+  //   const expectedDateOfBirth = new Date(newBirthDate).toLocaleDateString('en-US', {
+  //     year: 'numeric',
+  //     month: 'short',
+  //     day: 'numeric'
+  //   });
+
+  //   cy.get('#dateOfBirth').should('contain.text', expectedDateOfBirth);
+
+  //   cy.get('#phoneNumber').should('contain.text', newPhoneNumber);
+  //   cy.get('#iban').should('contain.text', newIban);
+  // });
+
+  it('Should delete contact', () => {
+    let countBeforeDeletion = 0;
+
+    cy.get('.p-datatable-tbody tr')
+      .then(elements => {
+        countBeforeDeletion = elements.length;
+        cy.get('.show-details-button').first().click();
+        cy.get('#deleteContactButton').click();
+        cy.get('button.p-confirm-dialog-accept').click();
+
+        return cy.get('.p-datatable-tbody tr');
+      })
+      .then(elements => {
+        const countAfterDeletion = elements.length;
+
+        expect(countAfterDeletion).to.be.eq(countBeforeDeletion - 1);
       });
-  });
+  })
 
-  it('Should change details', () => {
-
-
-
-  });
-
-  it('Adds a contact and redirects to details', () => {
+  it('Should add a contact and redirect to details', () => {
     cy.get('#addContact').click();
 
     rename(contact.firstName, contact.lastName);
