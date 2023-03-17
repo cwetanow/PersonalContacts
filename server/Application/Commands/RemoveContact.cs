@@ -24,7 +24,7 @@ public class RemoveContact
 
             if (contact is null)
             {
-                throw new EntityNotFoundException<PersonalContact>(request.Id);
+                throw new EntityNotFoundException(request.Id, typeof(PersonalContact));
             }
 
             context.Remove(contact);
