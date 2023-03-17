@@ -32,7 +32,7 @@ public class ChangeContactDetails
 
             if (contact is null)
             {
-                throw new EntityNotFoundException<PersonalContact>(request.Id);
+                throw new EntityNotFoundException(request.Id, typeof(PersonalContact));
             }
 
             var address = new Address(request.Address.Street, request.Address.City, request.Address.ZipCode);

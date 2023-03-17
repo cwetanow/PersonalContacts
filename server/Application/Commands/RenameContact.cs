@@ -31,7 +31,7 @@ public class RenameContact
 
             if (contact is null)
             {
-                throw new EntityNotFoundException<PersonalContact>(request.Id);
+                throw new EntityNotFoundException(request.Id, typeof(PersonalContact));
             }
 
             contact.Rename(request.FirstName, request.LastName);

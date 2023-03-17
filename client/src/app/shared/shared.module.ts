@@ -8,10 +8,11 @@ import { DialogModule } from 'primeng/dialog';
 import { MenubarModule } from 'primeng/menubar';
 import { DynamicDialogModule, DialogService } from 'primeng/dynamicdialog';
 import { CalendarModule } from 'primeng/calendar';
+import { ToastModule } from 'primeng/toast';
 import { CardModule } from 'primeng/card';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 const angularModules = [
   CommonModule,
@@ -29,7 +30,8 @@ const primeModules = [
   CalendarModule,
   CardModule,
   DynamicDialogModule,
-  MenubarModule
+  MenubarModule,
+  ToastModule
 ];
 
 @NgModule({
@@ -43,7 +45,8 @@ const primeModules = [
   ],
   providers: [
     ConfirmationService,
-    DialogService
+    DialogService,
+    MessageService
   ]
 })
 export class SharedModule { }

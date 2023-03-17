@@ -35,7 +35,7 @@ public class HandlerTests
         Func<Task> action = async () => await handler.Handle(new Command(id, "firstname", "lastname"), default);
 
         // Assert
-        await action.Should().ThrowAsync<EntityNotFoundException<PersonalContact>>();
+        await action.Should().ThrowAsync<EntityNotFoundException>();
     }
 
     [Fact]
