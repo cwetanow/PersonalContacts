@@ -1,3 +1,18 @@
+## Technologies
+### Backend
+* .NET 6
+* Entity Framework Core 6
+* MediatR with CQRS pattern
+* FluentValidations
+* DDD Entities and Value objects
+
+### Frontend
+* Angular 15
+* NgRx Store for State management
+* NgRx Effects
+* PrimeNG components
+* Cypress E2E tests
+
 ## Getting Started
 Use these instructions to get the project up and running.
 
@@ -44,8 +59,3 @@ To run cypress e2e tests (run from `client` folder)
 Launch [http://localhost:4200/](http://localhost:4200/) in your browser to view the Web UI
 
 Launch [https://localhost:7203/swagger](https://localhost:7203/swagger) in your browser to view the API Swagger interface
-
-## Technologies
-* .NET 6
-* Entity Framework Core 6
-* Angular 15
