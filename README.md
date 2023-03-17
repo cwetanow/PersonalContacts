@@ -6,7 +6,7 @@ You will need the following tools:
 
 * Visual Studio Code or Visual Studio 
 * .NET 6
-* Node.js
+* Node.js 16+
 * Docker
 
 ### Setup
