@@ -23,6 +23,8 @@ export enum PersonalContactActions {
 
   ChangeContactDetails = '[PersonalContact] Change Contact Details',
   ChangeContactDetailsSuccess = '[PersonalContact] Change Contact Details Success',
+
+  PersonalContactActionFail = '[PersonalContact] Personal Contact Action Fail'
 }
 
 export const loadPersonalContacts = createAction(
@@ -84,3 +86,8 @@ export const changeContactDetailsSuccess = createAction(
   PersonalContactActions.ChangeContactDetailsSuccess,
   props<{ updatedContact: PersonalContactDetail }>()
 );
+
+export const contactActionFail = createAction(
+  PersonalContactActions.PersonalContactActionFail,
+  props<{ errorMessage: string }>()
+)
